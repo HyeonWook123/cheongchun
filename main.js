@@ -124,7 +124,8 @@
       }
       
       if (dots) {
-        dots.innerHTML = config.proofs.images.map((_, index) => `
+        const maxSlide = Math.max(0, config.proofs.images.length - 3);
+        dots.innerHTML = Array.from({length: maxSlide + 1}, (_, index) => `
           <span class="slider-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
         `).join('');
       }
@@ -146,7 +147,7 @@
       const totalSlides = config.proofs.images.length;
       const slidesPerView = 3; // 한 번에 보이는 슬라이드 수
       const slideWidth = 33.333 + 0.7; // 각 슬라이드의 너비 + gap 보정
-      const maxSlide = totalSlides - slidesPerView + 1; // 4개 이미지면 2번 이동 가능
+      const maxSlide = Math.max(0, totalSlides - slidesPerView); // 4개 이미지면 1번 이동 가능 (0,1 위치)
       
       function goToSlide(index) {
         currentSlide = Math.min(Math.max(0, index), maxSlide);
