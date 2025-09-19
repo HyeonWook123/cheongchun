@@ -116,16 +116,24 @@
       if (subtitle) subtitle.textContent = config.proofs.subtitle;
       
       if (container) {
-        container.innerHTML = config.proofs.images.map((img, index) => `
+        // 순환형 슬라이더를 위해 이미지 복제 (이전 이미지 + 원본 + 다음 이미지)
+        const images = config.proofs.images;
+        const extendedImages = [
+          images[images.length - 1], // 마지막 이미지를 맨 앞에
+          ...images, // 원본 이미지들
+          images[0] // 첫 번째 이미지를 맨 뒤에
+        ];
+
+        container.innerHTML = extendedImages.map((img, index) => `
           <div class="slider-slide">
-            <img src="${img}" alt="증빙 자료 ${index + 1}" loading="lazy">
+            <img src="${img}" alt="증빙 자료 ${((index - 1 + images.length) % images.length) + 1}" loading="lazy">
           </div>
         `).join('');
       }
-      
+
       if (dots) {
-        const maxSlide = Math.max(0, config.proofs.images.length - 3);
-        dots.innerHTML = Array.from({length: maxSlide + 1}, (_, index) => `
+        // 각 이미지마다 하나의 도트
+        dots.innerHTML = config.proofs.images.map((_, index) => `
           <span class="slider-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
         `).join('');
       }
@@ -143,48 +151,95 @@
       
       if (!container) return;
       
-      let currentSlide = 0;
-      const totalSlides = config.proofs.images.length;
-      const slidesPerView = 3; // 한 번에 보이는 슬라이드 수
+      let currentSlide = 0; // 현재 활성 이미지 인덱스 (0-3)
+      const totalSlides = config.proofs.images.length; // 4
       const slideWidth = 33.333 + 0.7; // 각 슬라이드의 너비 + gap 보정
-      const maxSlide = Math.max(0, totalSlides - slidesPerView); // 4개 이미지면 1번 이동 가능 (0,1 위치)
-      
-      function goToSlide(index) {
-        currentSlide = Math.min(Math.max(0, index), maxSlide);
-        container.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
-        
+      let realPosition = 1; // 실제 DOM 위치 (확장된 배열에서의 인덱스)
+
+      // 초기 위치 설정 (첫 번째 실제 이미지가 중앙에 오도록)
+      container.style.transform = `translateX(-${slideWidth}%)`;
+
+      function goToSlide(targetSlide) {
+        currentSlide = targetSlide;
+        realPosition = targetSlide + 1; // 확장된 배열에서 실제 위치
+
+        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+
         // 도트 업데이트
         dots.forEach((dot, i) => {
           dot.classList.toggle('active', i === currentSlide);
         });
       }
+
+      // 무한 순환을 위한 위치 재조정
+      function resetPosition() {
+        container.style.transition = 'none';
+        if (realPosition === 0) {
+          // 복제된 마지막 이미지에서 실제 마지막 이미지로
+          realPosition = totalSlides;
+          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+        } else if (realPosition === totalSlides + 1) {
+          // 복제된 첫 이미지에서 실제 첫 이미지로
+          realPosition = 1;
+          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+        }
+        setTimeout(() => {
+          container.style.transition = 'transform 0.5s ease';
+        }, 10);
+      }
       
       if (prevBtn) {
         prevBtn.addEventListener('click', () => {
-          currentSlide = Math.max(0, currentSlide - 1);
-          goToSlide(currentSlide);
+          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+          realPosition--;
+
+          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+
+          // 도트 업데이트
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+          });
+
+          // 위치 재조정
+          setTimeout(resetPosition, 500);
         });
       }
-      
+
       if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-          currentSlide = Math.min(maxSlide, currentSlide + 1);
-          goToSlide(currentSlide);
+          currentSlide = (currentSlide + 1) % totalSlides;
+          realPosition++;
+
+          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+
+          // 도트 업데이트
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentSlide);
+          });
+
+          // 위치 재조정
+          setTimeout(resetPosition, 500);
         });
       }
-      
+
       dots.forEach((dot, index) => {
         dot.addEventListener('click', () => goToSlide(index));
       });
-      
+
       // 자동 슬라이드 (3초마다, 한 장씩 이동)
       setInterval(() => {
-        if (currentSlide >= maxSlide) {
-          currentSlide = 0; // 마지막에 도달하면 처음으로
-        } else {
-          currentSlide++;
-        }
-        goToSlide(currentSlide);
+        currentSlide = (currentSlide + 1) % totalSlides;
+        realPosition++;
+
+        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+
+        // 도트 업데이트
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlide);
+        });
+
+        // 위치 재조정
+        setTimeout(resetPosition, 500);
       }, 3000);
     }
     
