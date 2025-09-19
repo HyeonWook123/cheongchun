@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>청년취업진로교육원 - 군 복무 청년 취업 전문 상담</title>
-  <meta name="description" content="군 복무 중/전역 직전 청년들을 위한 취업 상담. 서류 준비부터 면접까지 카카오톡으로 빠르게 상담받으세요.">
-  
+  <title>청춘도약일자리교육원 - 구직청원휴가 완벽 지원</title>
+  <meta name="description" content="50% 이상 복무 군인분들의 구직청원휴가 신청부터 승인까지. 당일 서류발급, 95% 승인률 보장.">
+
   <!-- Open Graph -->
-  <meta property="og:title" content="청년취업진로교육원 - 군 복무 청년 취업 전문 상담">
-  <meta property="og:description" content="군 복무 중/전역 직전 청년들을 위한 취업 상담. 서류 준비부터 면접까지 카카오톡으로 빠르게 상담받으세요.">
+  <meta property="og:title" content="청춘도약일자리교육원 - 구직청원휴가 완벽 지원">
+  <meta property="og:description" content="50% 이상 복무 군인분들의 구직청원휴가 신청부터 승인까지. 당일 서류발급, 95% 승인률 보장.">
   <meta property="og:image" content="assets/images/og-image.jpg">
   <meta property="og:url" content="https://yoursite.com">
   <meta property="og:type" content="website">
-  
+
   <!-- 파비콘 -->
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  
+
   <!-- 스타일시트 -->
   <link rel="stylesheet" href="styles.css">
 
@@ -27,68 +27,112 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "td1208mpfh");
   </script>
-  
+
   <!-- 설정 파일 -->
   <script src="assets/config.js"></script>
 </head>
+
 <body>
-  <!-- 상단 헤더 -->
-  <header class="header" id="header">
+  <!-- 헤더 -->
+  <header class="header">
     <div class="container">
       <div class="header-inner">
-        <a href="#" class="logo">
-          <img src="assets/images/logo.png" alt="청년취업진로교육원" id="logo-img">
-        </a>
+        <div class="logo">
+          <img src="assets/images/logo.png" alt="청춘도약일자리교육원" id="logo">
+        </div>
         <nav class="nav">
-          <button class="nav-toggle" aria-label="메뉴 열기" id="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-          <ul class="nav-menu" id="nav-menu">
+          <ul class="nav-menu">
+            <li><a href="#diagnosis">자가진단</a></li>
+            <li><a href="#documents">서류샘플</a></li>
+            <li><a href="#process">프로세스</a></li>
+            <li><a href="#reviews">후기</a></li>
             <li><a href="#pricing">가격</a></li>
-            <li><a href="#about">소개</a></li>
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="#steps">절차</a></li>
           </ul>
         </nav>
         <a href="#" class="btn btn-primary header-cta js-kakao-cta">카카오 상담</a>
+        <button class="nav-toggle" aria-label="메뉴 토글">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </header>
 
   <!-- 히어로 섹션 -->
-  <section class="hero" id="hero">
+  <section class="hero">
     <div class="container">
       <div class="hero-inner">
         <div class="hero-content">
+          <div class="hero-tagline" id="hero-tagline"></div>
           <h1 class="hero-headline" id="hero-headline"></h1>
           <p class="hero-subcopy" id="hero-subcopy"></p>
           <div class="hero-cta">
-            <a href="#" class="btn btn-primary btn-large js-kakao-cta">무료 상담 시작하기</a>
-            <a href="#pricing" class="btn btn-outline">가격 확인하기</a>
+            <a href="#diagnosis" class="btn btn-primary btn-large" id="hero-primary-cta"></a>
+            <a href="#government-basis" class="btn btn-outline" id="hero-secondary-cta"></a>
           </div>
           <div class="hero-badges" id="hero-badges"></div>
         </div>
         <div class="hero-visual">
-          <img src="" alt="상담 전문가" id="hero-image" loading="lazy">
+          <img src="" alt="구직청원휴가 지원" id="hero-image" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 가격 섹션 -->
-  <section class="pricing" id="pricing">
+  <!-- 자가진단 섹션 -->
+  <section class="self-diagnosis" id="diagnosis">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">상담 패키지</h2>
-        <p class="section-subtitle">목적에 맞는 상담을 선택하세요</p>
+        <h2 class="section-title" id="diagnosis-title"></h2>
+        <p class="section-subtitle" id="diagnosis-subtitle"></p>
       </div>
-      <div class="pricing-grid" id="pricing-grid"></div>
+
+      <!-- 카테고리 탭 -->
+      <div class="diagnosis-categories" id="diagnosis-categories"></div>
+
+      <!-- 진단 폼 -->
+      <div class="diagnosis-form-container">
+        <form class="diagnosis-form" id="diagnosis-form">
+          <div class="diagnosis-questions" id="diagnosis-questions"></div>
+          <button type="submit" class="btn btn-primary btn-large">진단 결과 보기</button>
+        </form>
+
+        <!-- 결과 화면 -->
+        <div class="diagnosis-result" id="diagnosis-result" style="display: none;">
+          <div class="result-icon">✅</div>
+          <h3 class="result-title" id="result-title"></h3>
+          <p class="result-subtitle" id="result-subtitle"></p>
+          <a href="#" class="btn btn-primary btn-large js-kakao-cta" id="result-cta"></a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 증빙 자료 섹션 -->
+  <!-- 서류 샘플 섹션 -->
+  <section class="document-samples" id="documents">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" id="documents-title"></h2>
+        <p class="section-subtitle" id="documents-subtitle"></p>
+      </div>
+      <div class="documents-grid" id="documents-grid"></div>
+    </div>
+  </section>
+
+  <!-- 프로세스 안내 섹션 -->
+  <section class="process-guide" id="process">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" id="process-title"></h2>
+        <p class="section-subtitle" id="process-subtitle"></p>
+      </div>
+      <div class="process-timeline" id="process-timeline"></div>
+    </div>
+  </section>
+
+  <!-- 기존 증빙 슬라이더 (재활용) -->
   <section class="proof" id="proof">
     <div class="container">
       <div class="section-header">
@@ -103,6 +147,31 @@
         <button class="slider-next" aria-label="다음 슬라이드" id="slider-next">›</button>
         <div class="slider-dots" id="slider-dots"></div>
       </div>
+    </div>
+  </section>
+
+  <!-- 후기 섹션 -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" id="reviews-title"></h2>
+        <p class="section-subtitle" id="reviews-subtitle"></p>
+      </div>
+      <div class="reviews-samples" id="reviews-samples"></div>
+      <div class="reviews-cta">
+        <a href="reviews.html" target="_blank" class="btn btn-outline btn-large" id="reviews-cta-btn"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 가격 섹션 -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">합리적인 가격, 확실한 결과</h2>
+        <p class="section-subtitle">투명한 가격 정책과 리스크 역전 보장</p>
+      </div>
+      <div class="pricing-grid" id="pricing-grid"></div>
     </div>
   </section>
 
@@ -122,86 +191,47 @@
     </div>
   </section>
 
-  <!-- 3가지 특징 -->
-  <section class="features3" id="features3">
-    <div class="container">
-      <div class="features3-grid" id="features3-grid"></div>
-    </div>
-  </section>
-
-  <!-- 소개 섹션 -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about-inner">
-        <div class="about-content">
-          <h2 class="about-title" id="about-title"></h2>
-          <p class="about-text" id="about-text"></p>
-          <div class="about-stats" id="about-stats"></div>
-        </div>
-        <div class="about-visual">
-          <img src="" alt="청년취업진로교육원 소개" id="about-image" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
+  <!-- FAQ 섹션 -->
   <section class="faq" id="faq">
     <div class="container">
       <div class="section-header">
         <h2 class="section-title">자주 묻는 질문</h2>
-        <p class="section-subtitle">궁금한 점을 확인하세요</p>
+        <p class="section-subtitle">구직청원휴가 관련 궁금한 점들을 해결해드립니다</p>
       </div>
       <div class="faq-list" id="faq-list"></div>
     </div>
   </section>
 
-  <!-- 콘텐츠 그리드 -->
-  <section class="contents" id="contents">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">제공 서비스</h2>
-        <p class="section-subtitle">다양한 취업 지원 프로그램</p>
-      </div>
-      <div class="contents-grid" id="contents-grid"></div>
-    </div>
-  </section>
-
-  <!-- 진행 단계 -->
-  <section class="steps" id="steps">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">상담 진행 절차</h2>
-        <p class="section-subtitle">간단한 3단계로 시작하세요</p>
-      </div>
-      <div class="steps-timeline" id="steps-timeline"></div>
-    </div>
-  </section>
-
   <!-- 최종 CTA -->
-  <section class="final-cta" id="final-cta">
+  <section class="final-cta">
     <div class="container">
       <div class="final-cta-inner">
         <h2 class="final-cta-title" id="final-cta-title"></h2>
         <p class="final-cta-subtitle" id="final-cta-subtitle"></p>
-        <a href="#" class="btn btn-primary btn-large js-kakao-cta" id="final-cta-button"></a>
+        <a href="#diagnosis" class="btn btn-primary btn-large" id="final-cta-button"></a>
       </div>
     </div>
   </section>
 
   <!-- 푸터 -->
-  <footer class="footer" id="footer">
+  <footer class="footer">
     <div class="container">
-      <div class="footer-inner">
-        <div class="footer-info">
-          <h3 class="footer-brand" id="footer-brand"></h3>
-          <address class="footer-address" id="footer-address"></address>
-          <p class="footer-reg" id="footer-reg"></p>
-          <p class="footer-ceo" id="footer-ceo"></p>
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="assets/images/logo.png" alt="청춘도약일자리교육원" class="footer-logo">
+          <p class="footer-description" id="footer-description"></p>
         </div>
-        <div class="footer-links" id="footer-links"></div>
+        <div class="footer-info">
+          <div class="footer-contact">
+            <h4>연락처</h4>
+            <p id="footer-phone"></p>
+            <p id="footer-email"></p>
+            <p id="footer-address"></p>
+          </div>
+        </div>
       </div>
       <div class="footer-bottom">
+        <div class="footer-links" id="footer-links"></div>
         <p class="footer-copyright" id="footer-copyright"></p>
       </div>
     </div>
@@ -213,6 +243,21 @@
       <path d="M12 3C6.48 3 2 6.58 2 11c0 2.52 1.45 4.77 3.71 6.24-.15.51-.98 3.33-1.02 3.54-.05.32.12.32.25.22.11-.08 3.55-2.36 4.05-2.7.33.04.67.06 1.01.06 5.52 0 10-3.58 10-8 0-4.42-4.48-8-10-8z"/>
     </svg>
   </div>
+
+  <!-- 모바일 전용 스마트 스티커 CTA -->
+  <a href="#" id="mobile-smart-sticker" class="mobile-smart-sticker js-kakao-cta">
+    <div class="smart-sticker-content">
+      <div class="smart-sticker-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3C6.48 3 2 6.58 2 11c0 2.52 1.45 4.77 3.71 6.24-.15.51-.98 3.33-1.02 3.54-.05.32.12.32.25.22.11-.08 3.55-2.36 4.05-2.7.33.04.67.06 1.01.06 5.52 0 10-3.58 10-8 0-4.42-4.48-8-10-8z"/>
+        </svg>
+      </div>
+      <div class="smart-sticker-text">
+        <div class="smart-sticker-title">무료 상담</div>
+        <div class="smart-sticker-subtitle">카카오톡 상담</div>
+      </div>
+    </div>
+  </a>
 
   <!-- 스크립트 -->
   <script src="main.js"></script>

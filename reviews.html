@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이용후기 - 청춘도약일자리교육원</title>
+  <meta name="description" content="구직청원휴가를 성공적으로 받으신 분들의 실제 후기를 확인하세요.">
+
+  <!-- 스타일시트 -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- 설정 파일 -->
+  <script src="assets/config.js"></script>
+</head>
+
+<body>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="container">
+      <div class="header-inner">
+        <div class="logo">
+          <img src="assets/images/logo.png" alt="청춘도약일자리교육원">
+        </div>
+        <nav class="nav">
+          <ul class="nav-list">
+            <li><a href="index.html#diagnosis">자가진단</a></li>
+            <li><a href="index.html#documents">서류샘플</a></li>
+            <li><a href="index.html#process">프로세스</a></li>
+            <li><a href="reviews.html" class="active">후기</a></li>
+            <li><a href="index.html#pricing">가격</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </nav>
+        <a href="#" class="btn btn-primary header-cta js-kakao-cta">카카오 상담</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 후기 페이지 히어로 -->
+  <section class="reviews-hero">
+    <div class="container">
+      <div class="reviews-hero-content">
+        <h1>구직청원휴가 이용후기</h1>
+        <p>실제로 구직청원휴가를 성공적으로 받으신 분들의 생생한 후기입니다</p>
+        <div class="reviews-stats">
+          <div class="stat-item">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">성공 사례</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">95%</span>
+            <span class="stat-label">승인률</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">4.9</span>
+            <span class="stat-label">평점</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 필터 섹션 -->
+  <section class="reviews-filter">
+    <div class="container">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">전체</button>
+        <button class="filter-tab" data-filter="army">육군</button>
+        <button class="filter-tab" data-filter="navy">해군</button>
+        <button class="filter-tab" data-filter="airforce">공군</button>
+        <button class="filter-tab" data-filter="marines">해병대</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 후기 목록 -->
+  <section class="reviews-list">
+    <div class="container">
+      <div class="reviews-grid" id="reviews-grid">
+
+        <!-- 후기 카드들 -->
+        <div class="review-card" data-branch="army">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">김○○ 병장</span>
+              <span class="reviewer-branch">육군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"처음에는 복잡할 줄 알았는데 정말 간단했어요. 상담도 친절하고 서류도 바로 나와서 부대에서 바로 승인받았습니다. 다른 전우들한테도 추천했어요."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2024.01.15</span>
+            <span class="review-package">Standard 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="navy">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">이○○ 상병</span>
+              <span class="reviewer-branch">해군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"다른 곳은 비싸던데 여기는 가격도 합리적이고 정말 빨라요. 당일에 모든 서류 받아서 놀랐습니다. 특히 카카오톡으로 실시간 소통이 가능해서 좋았어요."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2024.01.10</span>
+            <span class="review-package">Basic 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="airforce">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">박○○ 일병</span>
+              <span class="reviewer-branch">공군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"급하게 구직청원휴가가 필요했는데 Priority 패키지로 당일 처리해주셔서 정말 감사했습니다. 상담사님도 친절하시고 모든 과정이 투명했어요."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2024.01.08</span>
+            <span class="review-package">Priority 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="army">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">정○○ 병장</span>
+              <span class="reviewer-branch">육군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"혼자서는 어떻게 해야 할지 몰랐는데, 처음부터 끝까지 다 도와주셔서 정말 고마웠습니다. 서류도 깔끔하게 나오고 부대에서도 문제없이 승인됐어요."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2024.01.05</span>
+            <span class="review-package">Standard 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="marines">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">최○○ 상병</span>
+              <span class="reviewer-branch">해병대</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"해병대는 까다로울 줄 알았는데, 군종별 맞춤 서류를 준비해주셔서 한 번에 통과했습니다. 전문성이 정말 느껴졌어요."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2024.01.03</span>
+            <span class="review-package">Standard 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="navy">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">강○○ 병장</span>
+              <span class="reviewer-branch">해군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"처음에는 온라인 상담이 어떨까 했는데, 오히려 편하고 좋았어요. 시간도 절약되고 결과도 만족스럽습니다. 추천합니다!"</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2023.12.28</span>
+            <span class="review-package">Basic 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="airforce">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">윤○○ 상병</span>
+              <span class="reviewer-branch">공군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★☆</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"서류는 잘 나왔는데 부대 절차가 좀 오래 걸렸어요. 그래도 필요한 서류는 완벽하게 준비해주셨고, 결국 승인받았습니다."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2023.12.25</span>
+            <span class="review-package">Standard 패키지</span>
+          </div>
+        </div>
+
+        <div class="review-card" data-branch="army">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">조○○ 일병</span>
+              <span class="reviewer-branch">육군</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">★★★★★</span>
+            </div>
+          </div>
+          <div class="review-content">
+            <p>"복무율 50% 넘자마자 바로 신청했어요. 빠르고 정확한 처리에 감동받았습니다. 가격 대비 정말 만족스러워요."</p>
+          </div>
+          <div class="review-footer">
+            <span class="review-date">2023.12.20</span>
+            <span class="review-package">Basic 패키지</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 더보기 버튼 -->
+      <div class="load-more">
+        <button class="btn btn-outline btn-large">더 많은 후기 보기</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 후기 작성 CTA -->
+  <section class="review-write-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>당신도 성공 후기의 주인공이 되세요</h2>
+        <p>구직청원휴가 신청부터 승인까지, 전 과정을 완벽하게 지원해드립니다</p>
+        <a href="#" class="btn btn-primary btn-large js-kakao-cta">무료 상담 시작하기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <img src="assets/images/logo.png" alt="청춘도약일자리교육원" class="footer-logo">
+          <p class="footer-description">2030 청년들을 위한 일자리 정보 포털</p>
+        </div>
+        <div class="footer-info">
+          <div class="footer-contact">
+            <h4>연락처</h4>
+            <p>010-0000-0000</p>
+            <p>hello@example.com</p>
+            <p>서울시 ○○구 ○○로 00</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-links">
+          <a href="#">이용약관</a>
+          <a href="#">개인정보처리방침</a>
+          <a href="#">사업자정보</a>
+        </div>
+        <p class="footer-copyright">© 2024 청춘도약일자리교육원. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 스크립트 -->
+  <script>
+    // 후기 필터링 기능
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const reviewCards = document.querySelectorAll('.review-card');
+
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const filter = this.dataset.filter;
+
+          // 탭 활성화 상태 변경
+          filterTabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+
+          // 후기 카드 필터링
+          reviewCards.forEach(card => {
+            if (filter === 'all' || card.dataset.branch === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // 카카오 링크 설정
+      const kakaoButtons = document.querySelectorAll('.js-kakao-cta');
+      kakaoButtons.forEach(button => {
+        button.href = 'https://pf.kakao.com/_sylen';
+        button.target = '_blank';
+        button.rel = 'noopener noreferrer';
+      });
+    });
+  </script>
+</body>
+</html>

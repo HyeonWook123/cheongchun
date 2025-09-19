@@ -1,518 +1,692 @@
-// 설정 데이터 로드 및 DOM 조작
+// 청춘도약일자리교육원 - 메인 스크립트
 (function() {
   'use strict';
-  
-  // DOM이 로드된 후 실행
+
+  // DOM 로드 완료 후 실행
   document.addEventListener('DOMContentLoaded', function() {
-    const config = window.__SITE_CONFIG__;
-    
-    if (!config) {
-      console.error('설정 파일을 찾을 수 없습니다. config.js를 확인해주세요.');
+    // 설정 확인
+    if (typeof window.__SITE_CONFIG__ === 'undefined') {
+      console.error('Site configuration not loaded');
       return;
     }
-    
-    // 1. 브랜드명 설정
-    document.title = `${config.brandName} - 군 복무 청년 취업 전문 상담`;
-    const logoImg = document.getElementById('logo-img');
-    if (logoImg) logoImg.alt = config.brandName;
-    
-    // 2. 히어로 섹션 렌더링
-    renderHero();
-    
-    // 3. 가격 카드 렌더링
-    renderPricing();
-    
-    // 4. 증빙 슬라이더 렌더링
+
+    const config = window.__SITE_CONFIG__;
+
+    // 1. 히어로 섹션 렌더링
+    renderHeroSection();
+
+    // 2. 자가진단 섹션 렌더링
+    renderSelfDiagnosis();
+
+    // 3. 서류 샘플 섹션 렌더링
+    renderDocumentSamples();
+
+    // 4. 프로세스 가이드 렌더링
+    renderProcessGuide();
+
+    // 5. 기존 증빙 슬라이더 렌더링
     renderProofSlider();
-    
-    // 5. 카카오 배너 렌더링
+
+    // 6. 후기 섹션 렌더링
+    renderReviewsSection();
+
+    // 7. 가격 섹션 렌더링
+    renderPricingSection();
+
+    // 8. 카카오 배너 렌더링
     renderKakaoBanner();
-    
-    // 6. 3가지 특징 렌더링
-    renderFeatures3();
-    
-    // 7. 소개 섹션 렌더링
-    renderAbout();
-    
-    // 8. FAQ 렌더링
-    renderFAQ();
-    
-    // 9. 콘텐츠 그리드 렌더링
-    renderContents();
-    
-    // 10. 진행 단계 렌더링
-    renderSteps();
-    
-    // 11. 최종 CTA 렌더링
+
+    // 9. FAQ 섹션 렌더링
+    renderFAQSection();
+
+    // 10. 최종 CTA 렌더링
     renderFinalCTA();
-    
-    // 12. 푸터 렌더링
+
+    // 11. 푸터 렌더링
     renderFooter();
-    
-    // 13. 카카오 CTA 링크 설정
+
+    // 12. 카카오 CTA 링크 설정
     setupKakaoLinks();
-    
-    // 14. 카카오 공식 위젯 설정 (옵션)
+
+    // 13. 카카오 공식 위젯 설정 (옵션)
     setupKakaoWidget();
-    
-    // 15. 모바일 메뉴 토글
+
+    // 14. 모바일 메뉴 토글
     setupMobileMenu();
-    
-    // 16. 이미지 지연 로딩
+
+    // 15. 이미지 지연 로딩
     setupLazyLoading();
-    
-    // 히어로 섹션 렌더링
-    function renderHero() {
-      const headline = document.getElementById('hero-headline');
-      const subcopy = document.getElementById('hero-subcopy');
-      const image = document.getElementById('hero-image');
-      const badges = document.getElementById('hero-badges');
-      
-      if (headline) headline.textContent = config.hero.headline;
-      if (subcopy) subcopy.textContent = config.hero.subcopy;
-      if (image) {
-        image.src = config.hero.image;
-        image.alt = config.hero.headline;
-      }
-      
-      if (badges && config.hero.badges) {
-        badges.innerHTML = config.hero.badges.map(badge => 
-          `<span class="hero-badge">${badge}</span>`
-        ).join('');
-      }
+
+    // 16. 스크롤 애니메이션
+    setupScrollAnimations();
+
+    console.log('청춘도약일자리교육원 웹사이트 로드 완료');
+  });
+
+  // 히어로 섹션 렌더링
+  function renderHeroSection() {
+    const tagline = document.getElementById('hero-tagline');
+    const headline = document.getElementById('hero-headline');
+    const subcopy = document.getElementById('hero-subcopy');
+    const primaryCta = document.getElementById('hero-primary-cta');
+    const secondaryCta = document.getElementById('hero-secondary-cta');
+    const badges = document.getElementById('hero-badges');
+    const image = document.getElementById('hero-image');
+
+    if (tagline) tagline.textContent = config.tagline;
+    if (headline) headline.textContent = config.hero.headline;
+    if (subcopy) subcopy.textContent = config.hero.subcopy;
+    if (primaryCta) primaryCta.textContent = config.hero.primaryCta;
+    if (secondaryCta) secondaryCta.textContent = config.hero.secondaryCta;
+
+    if (badges && config.hero.badges) {
+      badges.innerHTML = config.hero.badges.map(badge =>
+        `<span class="hero-badge">${badge}</span>`
+      ).join('');
     }
-    
-    // 가격 카드 렌더링
-    function renderPricing() {
-      const grid = document.getElementById('pricing-grid');
-      if (!grid) return;
-      
-      grid.innerHTML = config.pricing.map(item => `
-        <div class="pricing-card ${item.popular ? 'popular' : ''}">
-          ${item.popular ? '<span class="pricing-badge">인기</span>' : ''}
-          <h3 class="pricing-title">${item.title}</h3>
-          <div class="pricing-price">
-            ${item.price}
-            <span class="pricing-unit">${item.unit}</span>
-          </div>
-          <ul class="pricing-features">
-            ${item.features.map(feature => 
-              `<li class="pricing-feature">${feature}</li>`
-            ).join('')}
-          </ul>
-          <a href="#" class="btn btn-primary btn-block js-kakao-cta">${item.cta}</a>
-        </div>
+
+    if (image) {
+      image.src = config.hero.image;
+      image.alt = config.hero.headline;
+    }
+  }
+
+  // 자가진단 섹션 렌더링
+  function renderSelfDiagnosis() {
+    const title = document.getElementById('diagnosis-title');
+    const subtitle = document.getElementById('diagnosis-subtitle');
+    const categories = document.getElementById('diagnosis-categories');
+    const questions = document.getElementById('diagnosis-questions');
+    const resultTitle = document.getElementById('result-title');
+    const resultSubtitle = document.getElementById('result-subtitle');
+    const resultCta = document.getElementById('result-cta');
+
+    if (title) title.textContent = config.selfDiagnosis.title;
+    if (subtitle) subtitle.textContent = config.selfDiagnosis.subtitle;
+
+    // 카테고리 탭 렌더링
+    if (categories && config.selfDiagnosis.categories) {
+      categories.innerHTML = config.selfDiagnosis.categories.map(category => `
+        <button class="diagnosis-category ${category.active ? 'active' : ''}" data-category="${category.id}">
+          <span class="category-icon">${category.icon}</span>
+          <span class="category-title">${category.title}</span>
+        </button>
       `).join('');
-    }
-    
-    // 증빙 슬라이더 렌더링
-    function renderProofSlider() {
-      const title = document.getElementById('proof-title');
-      const subtitle = document.getElementById('proof-subtitle');
-      const container = document.getElementById('slider-container');
-      const dots = document.getElementById('slider-dots');
-      
-      if (title) title.textContent = config.proofs.title;
-      if (subtitle) subtitle.textContent = config.proofs.subtitle;
-      
-      if (container) {
-        // 순환형 슬라이더를 위해 이미지 복제 (이전 이미지 + 원본 + 다음 이미지)
-        const images = config.proofs.images;
-        const extendedImages = [
-          images[images.length - 1], // 마지막 이미지를 맨 앞에
-          ...images, // 원본 이미지들
-          images[0] // 첫 번째 이미지를 맨 뒤에
-        ];
 
-        container.innerHTML = extendedImages.map((img, index) => `
-          <div class="slider-slide">
-            <img src="${img}" alt="증빙 자료 ${((index - 1 + images.length) % images.length) + 1}" loading="lazy">
-          </div>
-        `).join('');
-      }
-
-      if (dots) {
-        // 각 이미지마다 하나의 도트
-        dots.innerHTML = config.proofs.images.map((_, index) => `
-          <span class="slider-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
-        `).join('');
-      }
-      
-      // 슬라이더 기능 설정
-      setupSlider();
-    }
-    
-    // 슬라이더 기능
-    function setupSlider() {
-      const container = document.getElementById('slider-container');
-      const prevBtn = document.getElementById('slider-prev');
-      const nextBtn = document.getElementById('slider-next');
-      const dots = document.querySelectorAll('.slider-dot');
-      
-      if (!container) return;
-      
-      let currentSlide = 0; // 현재 활성 이미지 인덱스 (0-3)
-      const totalSlides = config.proofs.images.length; // 4
-      const slideWidth = 33.333 + 0.7; // 각 슬라이드의 너비 + gap 보정
-      let realPosition = 1; // 실제 DOM 위치 (확장된 배열에서의 인덱스)
-
-      // 초기 위치 설정 (첫 번째 실제 이미지가 중앙에 오도록)
-      container.style.transform = `translateX(-${slideWidth}%)`;
-
-      function goToSlide(targetSlide) {
-        currentSlide = targetSlide;
-        realPosition = targetSlide + 1; // 확장된 배열에서 실제 위치
-
-        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-
-        // 도트 업데이트
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentSlide);
-        });
-      }
-
-      // 무한 순환을 위한 위치 재조정
-      function resetPosition() {
-        container.style.transition = 'none';
-        if (realPosition === 0) {
-          // 복제된 마지막 이미지에서 실제 마지막 이미지로
-          realPosition = totalSlides;
-          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-        } else if (realPosition === totalSlides + 1) {
-          // 복제된 첫 이미지에서 실제 첫 이미지로
-          realPosition = 1;
-          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+      // 카테고리 클릭 이벤트
+      categories.addEventListener('click', function(e) {
+        const categoryBtn = e.target.closest('.diagnosis-category');
+        if (categoryBtn) {
+          // 모든 카테고리 비활성화
+          categories.querySelectorAll('.diagnosis-category').forEach(btn =>
+            btn.classList.remove('active')
+          );
+          // 클릭된 카테고리 활성화
+          categoryBtn.classList.add('active');
         }
-        setTimeout(() => {
-          container.style.transition = 'transform 0.5s ease';
-        }, 10);
-      }
-      
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-          realPosition--;
-
-          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-
-          // 도트 업데이트
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentSlide);
-          });
-
-          // 위치 재조정
-          setTimeout(resetPosition, 500);
-        });
-      }
-
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-          currentSlide = (currentSlide + 1) % totalSlides;
-          realPosition++;
-
-          container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-
-          // 도트 업데이트
-          dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === currentSlide);
-          });
-
-          // 위치 재조정
-          setTimeout(resetPosition, 500);
-        });
-      }
-
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => goToSlide(index));
       });
-
-      // 자동 슬라이드 (3초마다, 한 장씩 이동)
-      setInterval(() => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        realPosition++;
-
-        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-
-        // 도트 업데이트
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentSlide);
-        });
-
-        // 위치 재조정
-        setTimeout(resetPosition, 500);
-      }, 3000);
     }
-    
-    // 카카오 배너 렌더링
-    function renderKakaoBanner() {
-      const title = document.getElementById('kakao-banner-title');
-      const caption = document.getElementById('kakao-banner-caption');
-      const cta = document.getElementById('kakao-banner-cta');
-      const phoneMock = document.getElementById('kakao-phone-mock');
-      
-      if (title) title.textContent = config.kakaoBanner.title;
-      if (caption) caption.textContent = config.kakaoBanner.caption;
-      if (cta) cta.textContent = config.kakaoBanner.cta;
-      if (phoneMock) {
-        phoneMock.src = config.kakaoBanner.phoneMock;
-        phoneMock.alt = config.kakaoBanner.title;
-      }
-    }
-    
-    // 3가지 특징 렌더링
-    function renderFeatures3() {
-      const grid = document.getElementById('features3-grid');
-      if (!grid) return;
-      
-      grid.innerHTML = config.features3.map(feature => `
-        <div class="feature3-card">
-          <div class="feature3-icon">${feature.icon}</div>
-          <h3 class="feature3-title">${feature.title}</h3>
-          <p class="feature3-text">${feature.text}</p>
-        </div>
-      `).join('');
-    }
-    
-    // 소개 섹션 렌더링
-    function renderAbout() {
-      const title = document.getElementById('about-title');
-      const text = document.getElementById('about-text');
-      const image = document.getElementById('about-image');
-      const stats = document.getElementById('about-stats');
-      
-      if (title) title.textContent = config.about.title;
-      if (text) text.textContent = config.about.text;
-      if (image) {
-        image.src = config.about.image;
-        image.alt = config.about.title;
-      }
-      
-      if (stats && config.about.stats) {
-        stats.innerHTML = config.about.stats.map(stat => `
-          <div class="about-stat">
-            <span class="about-stat-number">${stat.number}</span>
-            <span class="about-stat-label">${stat.label}</span>
+
+    // 진단 질문 단계별 렌더링
+    let currentQuestionIndex = 0;
+    const totalQuestions = config.selfDiagnosis.form.questions.length;
+    const userAnswers = {};
+
+    function renderCurrentQuestion() {
+      if (questions && config.selfDiagnosis.form.questions) {
+        const question = config.selfDiagnosis.form.questions[currentQuestionIndex];
+
+        questions.innerHTML = `
+          <div class="diagnosis-question active">
+            <div class="question-progress">
+              <span class="progress-text">${currentQuestionIndex + 1} / ${totalQuestions}</span>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: ${((currentQuestionIndex + 1) / totalQuestions) * 100}%"></div>
+              </div>
+            </div>
+            <h4 class="question-title">${question.title}</h4>
+            <div class="question-options">
+              ${question.options.map((option, optionIndex) => `
+                <label class="option-label">
+                  <input type="radio" name="current_question" value="${optionIndex}" required>
+                  <span class="option-text">${option}</span>
+                </label>
+              `).join('')}
+            </div>
+            ${currentQuestionIndex > 0 ? `
+            <div class="question-navigation">
+              <button type="button" class="btn btn-outline prev-question">이전</button>
+            </div>` : ''}
           </div>
-        `).join('');
-      }
-    }
-    
-    // FAQ 렌더링
-    function renderFAQ() {
-      const list = document.getElementById('faq-list');
-      if (!list) return;
-      
-      list.innerHTML = config.faq.map((item, index) => `
-        <div class="faq-item" data-index="${index}">
-          <div class="faq-question">${item.q}</div>
-          <div class="faq-answer">${item.a}</div>
-        </div>
-      `).join('');
-      
-      // FAQ 아코디언 기능
-      const faqItems = document.querySelectorAll('.faq-item');
-      faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-          // 다른 항목 닫기 (단일 열림 모드)
-          faqItems.forEach(otherItem => {
-            if (otherItem !== item) {
-              otherItem.classList.remove('active');
+        `;
+
+        // 라디오 버튼 선택 이벤트
+        const radioButtons = questions.querySelectorAll('input[type="radio"]');
+        const prevBtn = questions.querySelector('.prev-question');
+
+        radioButtons.forEach(radio => {
+          radio.addEventListener('change', function() {
+            if (this.checked) {
+              userAnswers[`question_${currentQuestionIndex}`] = this.value;
+
+              // 자동으로 다음 질문으로 진행 (0.8초 딜레이)
+              setTimeout(() => {
+                if (currentQuestionIndex < totalQuestions - 1) {
+                  currentQuestionIndex++;
+                  renderCurrentQuestion();
+                } else {
+                  // 마지막 질문 완료 - 결과 자동 표시
+                  showDiagnosisResult();
+                }
+              }, 800);
             }
           });
-          // 현재 항목 토글
-          item.classList.toggle('active');
         });
-      });
-    }
-    
-    // 콘텐츠 그리드 렌더링
-    function renderContents() {
-      const grid = document.getElementById('contents-grid');
-      if (!grid) return;
-      
-      grid.innerHTML = config.contents.map(content => `
-        <div class="content-card">
-          <span class="content-badge" style="background: ${content.badgeColor || '#007bff'}">
-            ${content.badge}
-          </span>
-          <h3 class="content-title">${content.title}</h3>
-          <p class="content-text">${content.text}</p>
-        </div>
-      `).join('');
-    }
-    
-    // 진행 단계 렌더링
-    function renderSteps() {
-      const timeline = document.getElementById('steps-timeline');
-      if (!timeline) return;
-      
-      timeline.innerHTML = config.steps.map(step => `
-        <div class="step-item">
-          <div class="step-number">${step.number}</div>
-          <div class="step-icon">${step.icon}</div>
-          <h3 class="step-title">${step.title}</h3>
-          <p class="step-text">${step.text}</p>
-        </div>
-      `).join('');
-    }
-    
-    // 최종 CTA 렌더링
-    function renderFinalCTA() {
-      const title = document.getElementById('final-cta-title');
-      const subtitle = document.getElementById('final-cta-subtitle');
-      const button = document.getElementById('final-cta-button');
-      
-      if (title) title.textContent = config.finalCTA.title;
-      if (subtitle) subtitle.textContent = config.finalCTA.subtitle;
-      if (button) button.textContent = config.finalCTA.buttonText;
-    }
-    
-    // 푸터 렌더링
-    function renderFooter() {
-      const brand = document.getElementById('footer-brand');
-      const address = document.getElementById('footer-address');
-      const reg = document.getElementById('footer-reg');
-      const ceo = document.getElementById('footer-ceo');
-      const copyright = document.getElementById('footer-copyright');
-      const links = document.getElementById('footer-links');
-      
-      if (brand) brand.textContent = config.footer.bizName;
-      if (address) address.textContent = config.footer.address;
-      if (reg) reg.textContent = config.footer.reg;
-      if (ceo) ceo.textContent = config.footer.ceo;
-      if (copyright) copyright.textContent = config.footer.copyright;
-      
-      if (links && config.footer.links) {
-        links.innerHTML = config.footer.links.map(link => 
-          `<a href="${link.url}">${link.text}</a>`
-        ).join('');
+
+        // 이전 버튼 이벤트
+        if (prevBtn) {
+          prevBtn.addEventListener('click', function() {
+            if (currentQuestionIndex > 0) {
+              currentQuestionIndex--;
+              renderCurrentQuestion();
+
+              // 이전 답변 복원
+              const prevAnswer = userAnswers[`question_${currentQuestionIndex}`];
+              if (prevAnswer !== undefined) {
+                const prevRadio = questions.querySelector(`input[value="${prevAnswer}"]`);
+                if (prevRadio) {
+                  prevRadio.checked = true;
+                }
+              }
+            }
+          });
+        }
       }
     }
-    
-    // 카카오 CTA 링크 설정
-    function setupKakaoLinks() {
-      const kakaoButtons = document.querySelectorAll('.js-kakao-cta');
-      
-      kakaoButtons.forEach(button => {
-        // 공식 위젯이 활성화되지 않은 경우 링크로 동작
-        if (!config.kakaoAppKey || !config.kakaoChannelPublicId) {
-          button.href = config.kakaoChannelUrl;
-          button.target = '_blank';
-          button.rel = 'noopener noreferrer';
+
+    function showDiagnosisResult() {
+      const form = document.getElementById('diagnosis-form');
+      const result = document.getElementById('diagnosis-result');
+
+      if (form && result) {
+        form.style.display = 'none';
+        result.style.display = 'block';
+        result.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // 초기 질문 렌더링
+    renderCurrentQuestion();
+
+    // 결과 텍스트 설정
+    if (resultTitle) resultTitle.textContent = config.selfDiagnosis.form.result.title;
+    if (resultSubtitle) resultSubtitle.textContent = config.selfDiagnosis.form.result.subtitle;
+    if (resultCta) resultCta.textContent = config.selfDiagnosis.form.result.cta;
+
+  }
+
+  // 서류 샘플 섹션 렌더링
+  function renderDocumentSamples() {
+    const title = document.getElementById('documents-title');
+    const subtitle = document.getElementById('documents-subtitle');
+    const grid = document.getElementById('documents-grid');
+
+    if (title) title.textContent = config.documentSamples.title;
+    if (subtitle) subtitle.textContent = config.documentSamples.subtitle;
+
+    if (grid && config.documentSamples.documents) {
+      grid.innerHTML = config.documentSamples.documents.map(doc => `
+        <div class="document-card">
+          <div class="document-image">
+            <img src="${doc.image}" alt="${doc.title}" loading="lazy">
+            ${doc.sample ? '<div class="sample-overlay">샘플</div>' : ''}
+          </div>
+          <div class="document-content">
+            <h3 class="document-title">${doc.title}</h3>
+            <p class="document-description">${doc.description}</p>
+            <ul class="document-features">
+              ${doc.features.map(feature => `<li>${feature}</li>`).join('')}
+            </ul>
+            <button class="btn btn-outline document-preview" data-doc="${doc.id}">
+              미리보기
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      // 미리보기 버튼 이벤트
+      grid.addEventListener('click', function(e) {
+        if (e.target.classList.contains('document-preview')) {
+          const docId = e.target.dataset.doc;
+          // 모달 또는 새 창에서 문서 미리보기 (구현 생략)
+          console.log('문서 미리보기:', docId);
         }
       });
     }
-    
-    // 카카오 공식 위젯 설정 (선택사항)
-    function setupKakaoWidget() {
-      // 앱 키와 채널 ID가 있는 경우에만 실행
-      if (!config.kakaoAppKey || !config.kakaoChannelPublicId) {
-        return;
+  }
+
+  // 프로세스 가이드 렌더링
+  function renderProcessGuide() {
+    const title = document.getElementById('process-title');
+    const subtitle = document.getElementById('process-subtitle');
+    const timeline = document.getElementById('process-timeline');
+
+    if (title) title.textContent = config.process.title;
+    if (subtitle) subtitle.textContent = config.process.subtitle;
+
+    if (timeline && config.process.steps) {
+      timeline.innerHTML = config.process.steps.map((step, index) => `
+        <div class="process-step">
+          <div class="step-number">${index + 1}</div>
+          <div class="step-content">
+            <h3 class="step-title">${step.title}</h3>
+            <p class="step-description">${step.description}</p>
+            <div class="step-details">
+              <div class="step-detail">
+                <strong>소요시간:</strong> ${step.duration}
+              </div>
+              <div class="step-detail">
+                <strong>준비물:</strong> ${step.requirements.join(', ')}
+              </div>
+              <div class="step-detail">
+                <strong>산출물:</strong> ${step.output}
+              </div>
+              <div class="step-detail">
+                <strong>담당:</strong> ${step.responsible}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // 기존 증빙 슬라이더 렌더링 (기존 코드 유지)
+  function renderProofSlider() {
+    const title = document.getElementById('proof-title');
+    const subtitle = document.getElementById('proof-subtitle');
+    const container = document.getElementById('slider-container');
+    const dots = document.getElementById('slider-dots');
+
+    if (title) title.textContent = config.proofs.title;
+    if (subtitle) subtitle.textContent = config.proofs.subtitle;
+
+    if (container) {
+      // 순환형 슬라이더를 위해 이미지 복제
+      const images = config.proofs.images;
+      const extendedImages = [
+        images[images.length - 1],
+        ...images,
+        images[0]
+      ];
+
+      container.innerHTML = extendedImages.map((img, index) => `
+        <div class="slider-slide">
+          <img src="${img}" alt="증빙 자료 ${((index - 1 + images.length) % images.length) + 1}" loading="lazy">
+        </div>
+      `).join('');
+    }
+
+    if (dots) {
+      dots.innerHTML = config.proofs.images.map((_, index) => `
+        <span class="slider-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
+      `).join('');
+    }
+
+    // 슬라이더 기능 설정
+    setupSlider();
+  }
+
+  // 슬라이더 기능 (기존 코드 유지)
+  function setupSlider() {
+    const container = document.getElementById('slider-container');
+    const prevBtn = document.getElementById('slider-prev');
+    const nextBtn = document.getElementById('slider-next');
+    const dots = document.querySelectorAll('.slider-dot');
+
+    if (!container) return;
+
+    let currentSlide = 0;
+    const totalSlides = config.proofs.images.length;
+    const slideWidth = 33.333 + 0.7;
+    let realPosition = 1;
+
+    container.style.transform = `translateX(-${slideWidth}%)`;
+
+    function goToSlide(targetSlide) {
+      currentSlide = targetSlide;
+      realPosition = targetSlide + 1;
+      container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    function resetPosition() {
+      container.style.transition = 'none';
+      if (realPosition === 0) {
+        realPosition = totalSlides;
+        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+      } else if (realPosition === totalSlides + 1) {
+        realPosition = 1;
+        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
       }
-      
-      // 카카오 SDK 동적 로드
-      const script = document.createElement('script');
-      script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
-      script.onload = function() {
-        // SDK 초기화
-        if (window.Kakao && !window.Kakao.isInitialized()) {
-          window.Kakao.init(config.kakaoAppKey);
-          
-          // 플로팅 버튼에 채팅 버튼 생성
-          const floatingBtn = document.getElementById('kakao-floating');
-          if (floatingBtn) {
-            // 기존 내용 제거
-            floatingBtn.innerHTML = '';
-            
-            // 공식 채팅 버튼 생성
-            window.Kakao.Channel.createChatButton({
-              container: '#kakao-floating',
-              channelPublicId: config.kakaoChannelPublicId,
-              title: 'consult',
-              size: 'large',
-              color: 'yellow',
-              shape: 'pc',
-              floating: false
-            });
+      setTimeout(() => {
+        container.style.transition = 'transform 0.5s ease';
+      }, 10);
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        realPosition--;
+        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlide);
+        });
+        setTimeout(resetPosition, 500);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        realPosition++;
+        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlide);
+        });
+        setTimeout(resetPosition, 500);
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => goToSlide(index));
+    });
+
+    // 자동 슬라이드
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      realPosition++;
+      container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+      setTimeout(resetPosition, 500);
+    }, 3000);
+  }
+
+  // 후기 섹션 렌더링
+  function renderReviewsSection() {
+    const title = document.getElementById('reviews-title');
+    const subtitle = document.getElementById('reviews-subtitle');
+    const samples = document.getElementById('reviews-samples');
+    const ctaBtn = document.getElementById('reviews-cta-btn');
+
+    if (title) title.textContent = config.reviews.title;
+    if (subtitle) subtitle.textContent = config.reviews.subtitle;
+    if (ctaBtn) ctaBtn.textContent = config.reviews.cta;
+
+    if (samples && config.reviews.samples) {
+      samples.innerHTML = config.reviews.samples.map(review => `
+        <div class="review-sample">
+          <div class="review-header">
+            <div class="reviewer-info">
+              <span class="reviewer-name">${review.name}</span>
+              <span class="reviewer-branch">${review.branch}</span>
+            </div>
+            <div class="review-rating">
+              <span class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
+            </div>
+          </div>
+          <div class="review-text">${review.text}</div>
+          <div class="review-date">${review.date}</div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // 가격 섹션 렌더링
+  function renderPricingSection() {
+    const grid = document.getElementById('pricing-grid');
+
+    if (grid && config.pricing) {
+      grid.innerHTML = config.pricing.map(item => `
+        <div class="pricing-card ${item.popular ? 'popular' : ''}">
+          ${item.popular ? '<div class="popular-badge">인기</div>' : ''}
+          <div class="pricing-header">
+            <h3 class="pricing-title">${item.title}</h3>
+            <p class="pricing-subtitle">${item.subtitle}</p>
+            <div class="pricing-price">
+              <span class="price-amount">${item.price.toLocaleString()}</span>
+              <span class="price-unit">${item.unit}</span>
+            </div>
+          </div>
+          <div class="pricing-content">
+            <ul class="pricing-features">
+              ${item.features.map(feature =>
+                `<li class="pricing-feature">✓ ${feature}</li>`
+              ).join('')}
+            </ul>
+            ${item.limitations && item.limitations.length > 0 ? `
+              <ul class="pricing-limitations">
+                ${item.limitations.map(limitation =>
+                  `<li class="pricing-limitation">• ${limitation}</li>`
+                ).join('')}
+              </ul>
+            ` : ''}
+          </div>
+          <div class="pricing-footer">
+            <a href="#" class="btn btn-primary btn-block js-kakao-cta">${item.cta}</a>
+            <p class="pricing-guarantee">${item.guarantee}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // 카카오 배너 렌더링
+  function renderKakaoBanner() {
+    const title = document.getElementById('kakao-banner-title');
+    const caption = document.getElementById('kakao-banner-caption');
+    const cta = document.getElementById('kakao-banner-cta');
+    const phoneMock = document.getElementById('kakao-phone-mock');
+
+    if (title) title.textContent = config.kakaoBanner.title;
+    if (caption) caption.textContent = config.kakaoBanner.caption;
+    if (cta) cta.textContent = config.kakaoBanner.cta;
+    if (phoneMock) {
+      phoneMock.src = config.kakaoBanner.phoneMock;
+      phoneMock.alt = config.kakaoBanner.title;
+    }
+  }
+
+  // FAQ 섹션 렌더링
+  function renderFAQSection() {
+    const list = document.getElementById('faq-list');
+
+    if (list && config.faq) {
+      list.innerHTML = config.faq.map((item, index) => `
+        <div class="faq-item">
+          <button class="faq-question" data-faq="${index}">
+            <span class="faq-q">${item.q}</span>
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer" data-faq="${index}">
+            <p>${item.a}</p>
+          </div>
+        </div>
+      `).join('');
+
+      // FAQ 토글 기능
+      list.addEventListener('click', function(e) {
+        const question = e.target.closest('.faq-question');
+        if (question) {
+          const index = question.dataset.faq;
+          const answer = list.querySelector(`[data-faq="${index}"].faq-answer`);
+          const toggle = question.querySelector('.faq-toggle');
+
+          if (answer) {
+            const isOpen = answer.classList.contains('open');
+
+            // 모든 FAQ 닫기
+            list.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            list.querySelectorAll('.faq-toggle').forEach(t => t.textContent = '+');
+
+            // 클릭된 FAQ 토글
+            if (!isOpen) {
+              answer.classList.add('open');
+              toggle.textContent = '−';
+            }
           }
-          
-          // 모든 CTA 버튼 클릭 시 채팅 창 열기
-          const kakaoButtons = document.querySelectorAll('.js-kakao-cta');
-          kakaoButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-              e.preventDefault();
-              window.Kakao.Channel.chat({
-                channelPublicId: config.kakaoChannelPublicId
-              });
-            });
+        }
+      });
+    }
+  }
+
+  // 최종 CTA 렌더링
+  function renderFinalCTA() {
+    const title = document.getElementById('final-cta-title');
+    const subtitle = document.getElementById('final-cta-subtitle');
+    const button = document.getElementById('final-cta-button');
+
+    if (title) title.textContent = config.finalCta.title;
+    if (subtitle) subtitle.textContent = config.finalCta.subtitle;
+    if (button) button.textContent = config.finalCta.cta;
+  }
+
+  // 푸터 렌더링
+  function renderFooter() {
+    const description = document.getElementById('footer-description');
+    const phone = document.getElementById('footer-phone');
+    const email = document.getElementById('footer-email');
+    const address = document.getElementById('footer-address');
+    const links = document.getElementById('footer-links');
+    const copyright = document.getElementById('footer-copyright');
+
+    if (description) description.textContent = config.footer.description;
+    if (phone) phone.textContent = config.contact.phone;
+    if (email) email.textContent = config.contact.email;
+    if (address) address.textContent = config.contact.address;
+    if (copyright) copyright.textContent = config.footer.copyright;
+
+    if (links && config.footer.links) {
+      links.innerHTML = config.footer.links.map(link =>
+        `<a href="${link.url}">${link.text}</a>`
+      ).join('');
+    }
+  }
+
+  // 카카오 CTA 링크 설정
+  function setupKakaoLinks() {
+    const kakaoButtons = document.querySelectorAll('.js-kakao-cta');
+
+    kakaoButtons.forEach(button => {
+      if (!config.kakaoAppKey || !config.kakaoChannelPublicId) {
+        button.href = config.kakaoChannelUrl;
+        button.target = '_blank';
+        button.rel = 'noopener noreferrer';
+      }
+    });
+  }
+
+  // 카카오 공식 위젯 설정
+  function setupKakaoWidget() {
+    if (!config.kakaoAppKey || !config.kakaoChannelPublicId) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+    script.onload = function() {
+      if (window.Kakao && !window.Kakao.isInitialized()) {
+        window.Kakao.init(config.kakaoAppKey);
+
+        const floatingBtn = document.getElementById('kakao-floating');
+        if (floatingBtn) {
+          floatingBtn.innerHTML = '';
+          window.Kakao.Channel.createChatButton({
+            container: '#kakao-floating',
+            channelPublicId: config.kakaoChannelPublicId,
+            title: 'consult',
+            size: 'large',
+            color: 'yellow',
+            shape: 'pc'
           });
         }
-      };
-      document.head.appendChild(script);
-    }
-    
-    // 모바일 메뉴 토글
-    function setupMobileMenu() {
-      const toggle = document.getElementById('nav-toggle');
-      const menu = document.getElementById('nav-menu');
-      
-      if (toggle && menu) {
-        toggle.addEventListener('click', () => {
-          menu.classList.toggle('active');
-          toggle.classList.toggle('active');
-        });
-        
-        // 메뉴 항목 클릭 시 메뉴 닫기
-        const menuLinks = menu.querySelectorAll('a');
-        menuLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            menu.classList.remove('active');
-            toggle.classList.remove('active');
+
+        const kakaoButtons = document.querySelectorAll('.js-kakao-cta');
+        kakaoButtons.forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.Kakao.Channel.chat({
+              channelPublicId: config.kakaoChannelPublicId
+            });
           });
         });
       }
+    };
+    document.head.appendChild(script);
+  }
+
+  // 모바일 메뉴 토글
+  function setupMobileMenu() {
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+
+    if (toggle && nav) {
+      toggle.addEventListener('click', function() {
+        nav.classList.toggle('active');
+        toggle.classList.toggle('active');
+      });
+
+      // 메뉴 링크 클릭 시 메뉴 닫기
+      nav.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          nav.classList.remove('active');
+          toggle.classList.remove('active');
+        }
+      });
     }
-    
-    // 이미지 지연 로딩 (네이티브 lazy loading을 지원하지 않는 브라우저용)
-    function setupLazyLoading() {
-      if ('loading' in HTMLImageElement.prototype) {
-        // 브라우저가 네이티브 lazy loading을 지원함
-        return;
-      }
-      
-      // Intersection Observer를 사용한 폴백
-      const images = document.querySelectorAll('img[loading="lazy"]');
-      const imageObserver = new IntersectionObserver((entries) => {
+  }
+
+  // 이미지 지연 로딩
+  function setupLazyLoading() {
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const img = entry.target;
-            img.src = img.src;
-            img.removeAttribute('loading');
-            imageObserver.unobserve(img);
+            img.src = img.dataset.src || img.src;
+            img.classList.remove('lazy');
+            observer.unobserve(img);
           }
         });
       });
-      
-      images.forEach(img => imageObserver.observe(img));
-    }
-    
-    // 부드러운 스크롤 (폴백)
-    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
-    smoothScrollLinks.forEach(link => {
-      link.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          e.preventDefault();
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+
+      document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        imageObserver.observe(img);
       });
-    });
-  });
+    }
+  }
+
+  // 스크롤 애니메이션
+  function setupScrollAnimations() {
+    if ('IntersectionObserver' in window) {
+      const animationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      document.querySelectorAll('.section-header, .pricing-card, .process-step, .document-card').forEach(el => {
+        animationObserver.observe(el);
+      });
+    }
+  }
 })();

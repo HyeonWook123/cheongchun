@@ -43,6 +43,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* 고정 헤더 높이만큼 스크롤 오프셋 */
 }
 
 body {
@@ -84,9 +85,13 @@ a:hover {
   font-weight: 500;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   border: 2px solid transparent;
   font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  will-change: transform;
 }
 
 .btn-primary {
@@ -99,6 +104,8 @@ a:hover {
   background: var(--brand-dark);
   border-color: var(--brand-dark);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn-outline {
@@ -166,16 +173,40 @@ a:hover {
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 0;
+  background: var(--bg-light);
+  border-radius: var(--radius-lg);
+  padding: 0.5rem;
+  box-shadow: var(--shadow);
+}
+
+.nav-menu li {
+  position: relative;
 }
 
 .nav-menu a {
+  display: block;
   color: var(--text);
   font-weight: 500;
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  position: relative;
 }
 
 .nav-menu a:hover {
   color: var(--brand);
+  background: white;
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.nav-menu a.active {
+  background: var(--brand);
+  color: white;
+  box-shadow: var(--shadow);
 }
 
 .header-cta {
@@ -559,15 +590,6 @@ section {
   background: var(--bg-light);
 }
 
-.faq-question::after {
-  content: "+";
-  font-size: 1.5rem;
-  transition: transform 0.3s;
-}
-
-.faq-item.active .faq-question::after {
-  transform: rotate(45deg);
-}
 
 .faq-answer {
   padding: 0 1.5rem;
@@ -761,6 +783,814 @@ section {
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
 }
 
+/* 모바일 전용 스마트 스티커 CTA */
+.mobile-smart-sticker {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  cursor: pointer;
+  display: none; /* 기본적으로 숨김 */
+  align-items: center;
+  text-decoration: none;
+  z-index: 1001;
+  animation: pulse 3s infinite;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(31, 111, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-smart-sticker:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 25px rgba(31, 111, 255, 0.5);
+  color: white;
+}
+
+.smart-sticker-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.smart-sticker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.smart-sticker-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.smart-sticker-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.smart-sticker-subtitle {
+  font-size: 12px;
+  opacity: 0.9;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* 자가진단 섹션 */
+.self-diagnosis {
+  background: var(--bg);
+  padding: var(--spacing-xl) 0;
+}
+
+.diagnosis-categories {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.diagnosis-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.diagnosis-category:hover,
+.diagnosis-category.active {
+  border-color: var(--brand);
+  background: var(--brand-light);
+}
+
+.category-icon {
+  font-size: 2rem;
+}
+
+.category-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.diagnosis-form-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.diagnosis-questions {
+  margin-bottom: 2rem;
+}
+
+.diagnosis-question {
+  margin-bottom: 2rem;
+}
+
+.diagnosis-question.active {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* 진행도 표시 */
+.question-progress {
+  margin-bottom: 2rem;
+}
+
+.progress-text {
+  display: block;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-gray);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand), var(--brand-dark));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* 질문 네비게이션 */
+.question-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.question-navigation .btn {
+  min-width: 100px;
+}
+
+.question-navigation .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-gray);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.question-navigation .btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.question-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.question-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-label:hover {
+  border-color: var(--brand);
+  background: var(--brand-light);
+}
+
+.option-label input {
+  margin: 0;
+}
+
+.option-text {
+  font-size: 0.95rem;
+}
+
+.diagnosis-result {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--success-light, #f0f9ff);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--success, #10b981);
+}
+
+.result-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.result-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--success, #10b981);
+}
+
+.result-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* 서류 샘플 섹션 */
+.document-samples {
+  padding: var(--spacing-xl) 0;
+}
+
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.document-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.document-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.document-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.document-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sample-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--brand);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.document-content {
+  padding: 1.5rem;
+}
+
+.document-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.document-description {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.document-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.document-features li {
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.document-features li:before {
+  content: "✓";
+  color: var(--brand);
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.document-preview {
+  width: 100%;
+}
+
+/* 프로세스 가이드 */
+.process-guide {
+  background: var(--bg);
+  padding: var(--spacing-xl) 0;
+}
+
+.process-timeline {
+  margin-top: 3rem;
+}
+
+.process-step {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.process-step:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.step-number {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background: var(--brand);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.step-description {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.step-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background: var(--bg);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+
+.step-detail {
+  font-size: 0.9rem;
+}
+
+.step-detail strong {
+  color: var(--text);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* 후기 섹션 */
+.reviews-section {
+  padding: var(--spacing-xl) 0;
+}
+
+.reviews-samples {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.review-sample {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.reviewer-name {
+  font-weight: 600;
+}
+
+.reviewer-branch {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.review-rating .stars {
+  color: #fbbf24;
+  font-size: 1.1rem;
+}
+
+.review-text {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.reviews-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+/* FAQ 섹션 */
+.faq {
+  background: var(--bg);
+  padding: var(--spacing-xl) 0;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 3rem auto 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-question {
+  width: 100%;
+  padding: 2rem 1.5rem 2rem 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.faq-question:hover {
+  color: var(--brand);
+}
+
+.faq-toggle {
+  font-size: 1.5rem;
+  font-weight: normal;
+  transition: transform 0.3s ease;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-answer.open {
+  max-height: 200px;
+  padding-bottom: 2rem;
+}
+
+.faq-answer p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* 후기 페이지 전용 스타일 */
+.reviews-hero {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.reviews-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.reviews-hero p {
+  font-size: 1.125rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+}
+
+.reviews-stats {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.reviews-filter {
+  background: white;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.filter-tab {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+  background: var(--brand);
+  color: white;
+  border-color: var(--brand);
+}
+
+.reviews-list {
+  padding: 3rem 0;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.review-card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+}
+
+.review-card .review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.review-card .review-content {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.review-card .review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.review-package {
+  background: var(--brand-light);
+  color: var(--brand);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.load-more {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.review-write-cta {
+  background: var(--brand-light);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.cta-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cta-content p {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* 가격 카드 개선 */
+.pricing-card {
+  position: relative;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.pricing-card.popular {
+  border: 2px solid var(--brand);
+  transform: scale(1.05);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.pricing-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.pricing-price {
+  margin-bottom: 1rem;
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.price-unit {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-left: 0.25rem;
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.pricing-feature {
+  padding: 0.5rem 0;
+  color: var(--text);
+}
+
+.pricing-limitations {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.pricing-limitation {
+  padding: 0.25rem 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.pricing-footer {
+  margin-top: auto;
+}
+
+.pricing-guarantee {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* 애니메이션 */
+.animate-in {
+  animation: fadeInUp 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
   .slider-slide {
@@ -838,6 +1668,38 @@ section {
     height: 56px;
     bottom: 1rem;
     right: 1rem;
+  }
+
+  /* 모바일에서만 스마트 스티커 표시 */
+  .mobile-smart-sticker {
+    display: flex !important;
+    bottom: 15px;
+  }
+
+  /* 모바일에서는 기존 플로팅 버튼 숨김 */
+  .floating-button {
+    display: none;
+  }
+
+  /* 모바일 진단 질문 스타일 */
+  .question-navigation {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .question-navigation .btn {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .diagnosis-categories {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .diagnosis-category {
+    min-width: 100px;
+    flex: 1;
   }
 }
 
