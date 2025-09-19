@@ -134,9 +134,9 @@ a:hover {
 }
 
 .logo img {
-  height: 40px;
+  height: 200px;
   width: auto;
-  max-width: 150px;
+  max-width: 750px;
   object-fit: contain;
 }
 
