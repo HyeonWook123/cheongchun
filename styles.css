@@ -1177,8 +1177,28 @@ section {
 .process-timeline {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+  justify-items: center;
+}
+
+.process-step:nth-child(4),
+.process-step:nth-child(5) {
+  grid-column: span 1;
+}
+
+.process-step:nth-child(4) {
+  grid-column: 1 / 2;
+  grid-row: 2;
+  justify-self: end;
+  margin-right: 2rem;
+}
+
+.process-step:nth-child(5) {
+  grid-column: 3 / 4;
+  grid-row: 2;
+  justify-self: start;
+  margin-left: 2rem;
 }
 
 .process-step {
@@ -1889,10 +1909,19 @@ section {
   .process-timeline {
     grid-template-columns: 1fr;
     gap: 1rem;
+    justify-items: stretch;
   }
 
   .process-step {
     padding: 1.25rem;
+  }
+
+  .process-step:nth-child(4),
+  .process-step:nth-child(5) {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: stretch;
+    margin: 0;
   }
 
   .process-step .step-number {

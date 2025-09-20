@@ -131,70 +131,52 @@ window.__SITE_CONFIG__ = {
   // 프로세스 안내
   process: {
     title: "휴가 받기까지 전체 여정",
-    subtitle: "신청부터 승인까지 단계별 안내",
+    subtitle: "간단한 5단계로 구직청원휴가 완성",
     steps: [
       {
-        id: "apply",
-        title: "신청",
-        description: "온라인으로 간편 신청",
-        duration: "5분",
-        requirements: ["기본정보", "희망일정"],
-        output: "신청접수증",
-        responsible: "사용자"
+        id: "check-permission",
+        title: "지휘관 확인",
+        description: "부대 내 지휘관에게 구직청원휴가 가능 여부 확인하기",
+        duration: "1일",
+        requirements: ["복무기간 50% 이상"],
+        output: "내부 승인",
+        responsible: "장병"
       },
       {
-        id: "reservation",
-        title: "상담예약",
-        description: "전문 상담사와 일정 조율",
-        duration: "당일~1일",
-        requirements: ["연락처", "가능시간"],
-        output: "예약확정서",
-        responsible: "상담사"
+        id: "schedule-consultation",
+        title: "상담 예약",
+        description: "상담 기관에 상담가능 일정 확인 및 예약하기",
+        duration: "당일",
+        requirements: ["연락처", "희망일정"],
+        output: "예약 확정",
+        responsible: "장병"
       },
       {
-        id: "document-issue",
-        title: "예약확정서 발급",
-        description: "부대 제출용 예약 증명서 (필요시)",
+        id: "submit-confirmation",
+        title: "예정확인서 제출",
+        description: "(필요 시) 상담 예정확인서 제출하기",
         duration: "즉시",
-        requirements: ["예약완료"],
-        output: "예약확정서",
-        responsible: "시스템"
+        requirements: ["예약 완료"],
+        output: "상담 예정확인서",
+        responsible: "장병"
       },
       {
-        id: "consultation",
-        title: "상담 진행",
-        description: "진로상담 및 취업지도 실시",
+        id: "attend-consultation",
+        title: "상담 받기",
+        description: "예약일자에 상담받기",
         duration: "30분~1시간",
-        requirements: ["신분증", "이력서"],
-        output: "상담내역서",
-        responsible: "상담사"
+        requirements: ["신분증", "참석"],
+        output: "상담 완료",
+        responsible: "장병"
       },
       {
-        id: "certificate-issue",
-        title: "증빙서류 발급",
-        description: "상담내역서, 수료증 등 공식서류",
-        duration: "상담 후 즉시",
-        requirements: ["상담완료"],
-        output: "공식서류",
-        responsible: "교육원"
-      },
-      {
-        id: "submission",
-        title: "부대 제출",
-        description: "발급받은 서류를 부대에 제출",
+        id: "submit-certificates",
+        title: "서류 제출",
+        description: "인증서류(수료증, 상담 내역서) 부대에 제출하기",
         duration: "1~2일",
-        requirements: ["공식서류"],
-        output: "휴가신청서",
-        responsible: "사용자"
-      },
-      {
-        id: "approval",
-        title: "승인",
-        description: "부대 검토 후 휴가 승인",
-        duration: "3~7일",
-        requirements: ["부대검토"],
-        output: "휴가승인서",
-        responsible: "부대"
+        requirements: ["발급받은 서류"],
+        output: "휴가 승인",
+        responsible: "장병"
       }
     ]
   },
