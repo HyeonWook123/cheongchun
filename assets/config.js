@@ -136,47 +136,27 @@ window.__SITE_CONFIG__ = {
       {
         id: "check-permission",
         title: "지휘관 확인",
-        description: "부대 내 지휘관에게 구직청원휴가 가능 여부 확인하기",
-        duration: "1일",
-        requirements: ["복무기간 50% 이상"],
-        output: "내부 승인",
-        responsible: "장병"
+        description: "부대 내 지휘관에게 구직청원휴가 가능 여부 확인하기"
       },
       {
         id: "schedule-consultation",
         title: "상담 예약",
-        description: "상담 기관에 상담가능 일정 확인 및 예약하기",
-        duration: "당일",
-        requirements: ["연락처", "희망일정"],
-        output: "예약 확정",
-        responsible: "장병"
+        description: "상담 기관에 상담가능 일정 확인 및 예약하기"
       },
       {
         id: "submit-confirmation",
         title: "예정확인서 제출",
-        description: "(필요 시) 상담 예정확인서 제출하기",
-        duration: "즉시",
-        requirements: ["예약 완료"],
-        output: "상담 예정확인서",
-        responsible: "장병"
+        description: "(필요 시) 상담 예정확인서 제출하기"
       },
       {
         id: "attend-consultation",
         title: "상담 받기",
-        description: "예약일자에 상담받기",
-        duration: "30분~1시간",
-        requirements: ["신분증", "참석"],
-        output: "상담 완료",
-        responsible: "장병"
+        description: "예약일자에 상담받기"
       },
       {
         id: "submit-certificates",
         title: "서류 제출",
-        description: "인증서류(수료증, 상담 내역서) 부대에 제출하기",
-        duration: "1~2일",
-        requirements: ["발급받은 서류"],
-        output: "휴가 승인",
-        responsible: "장병"
+        description: "인증서류(수료증, 상담 내역서) 부대에 제출하기"
       }
     ]
   },

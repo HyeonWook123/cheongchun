@@ -281,20 +281,6 @@
           <div class="step-content">
             <h3 class="step-title">${step.title}</h3>
             <p class="step-description">${step.description}</p>
-            <div class="step-details">
-              <div class="step-detail">
-                <strong>소요시간:</strong> ${step.duration}
-              </div>
-              <div class="step-detail">
-                <strong>준비물:</strong> ${step.requirements.join(', ')}
-              </div>
-              <div class="step-detail">
-                <strong>산출물:</strong> ${step.output}
-              </div>
-              <div class="step-detail">
-                <strong>담당:</strong> ${step.responsible}
-              </div>
-            </div>
           </div>
         </div>
       `).join('');
