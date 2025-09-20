@@ -44,6 +44,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px; /* 고정 헤더 높이만큼 스크롤 오프셋 */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -52,6 +54,9 @@ body {
   line-height: 1.6;
   color: var(--text);
   background: var(--bg);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 img {
@@ -140,11 +145,25 @@ a:hover {
   padding: 1rem 0;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .logo img {
-  height: 200px;
+  height: 50px;
   width: auto;
-  max-width: 750px;
+  max-width: 200px;
   object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--brand);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .nav {
@@ -412,10 +431,11 @@ section {
 .slider-slide img {
   width: 100%;
   height: 300px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: var(--radius-lg);
   display: block;
   box-shadow: var(--shadow);
+  background: white;
 }
 
 .slider-prev,
@@ -736,6 +756,14 @@ section {
 .footer-brand {
   font-size: 1.5rem;
   font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
   margin-bottom: 1rem;
 }
 
@@ -1065,14 +1093,17 @@ section {
 
 .document-image {
   position: relative;
-  height: 200px;
+  height: 250px;
   overflow: hidden;
+  background: white;
+  border-radius: var(--radius);
 }
 
 .document-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: white;
 }
 
 .sample-overlay {
@@ -1611,13 +1642,35 @@ section {
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
+    position: relative;
+  }
+
+  /* 모든 섹션 너비 제한 */
+  section, div, header, footer {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 모든 요소 화면 너비 제한 */
+  * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 텍스트 줄바꿈 강제 */
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
   }
 
   /* 컨테이너 패딩 조정 */
   .container {
-    padding: 0 0.75rem;
+    padding: 0 0.5rem;
     max-width: 100%;
     width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   /* 헤더 완전 간소화 */
@@ -1635,13 +1688,19 @@ section {
 
   .logo {
     flex: 1;
-    text-align: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
 
   .logo img {
-    height: 35px;
-    max-width: 180px;
+    height: 30px;
+    max-width: 150px;
     width: auto;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   /* 네비게이션과 모든 관련 요소 완전 제거 */
@@ -1821,6 +1880,11 @@ section {
     text-align: center;
   }
 
+  .footer-logo {
+    height: 30px;
+    max-width: 120px;
+  }
+
   .footer-links {
     justify-content: center;
     flex-wrap: wrap;
@@ -1938,8 +2002,18 @@ section {
   }
 
   .logo img {
-    height: 35px;
-    max-width: 180px;
+    height: 25px;
+    max-width: 120px;
+  }
+
+  .logo-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .footer-logo {
+    height: 25px;
+    max-width: 100px;
   }
 }
 
