@@ -1732,11 +1732,18 @@ section {
   }
 
   .hero-inner {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
     text-align: center;
     width: 100%;
     max-width: 100%;
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
+    flex: 1;
   }
 
   .hero-tagline {
@@ -1775,8 +1782,9 @@ section {
 
   .hero-cta .btn {
     width: 100%;
-    max-width: 300px;
+    max-width: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
   .hero-badges {
@@ -1794,11 +1802,16 @@ section {
 
   .hero-visual {
     order: -1;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
   }
 
   .hero-visual img {
-    max-width: 100%;
+    width: 100%;
+    max-width: 300px;
     height: auto;
+    border-radius: var(--radius-lg);
   }
 
   /* 슬라이더 모바일 최적화 */
@@ -1961,7 +1974,8 @@ section {
   }
 
   .hero-cta .btn {
-    max-width: 280px;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -2003,7 +2017,8 @@ section {
   }
 
   .hero-cta .btn {
-    max-width: 250px;
+    width: 100%;
+    max-width: 100%;
     padding: 0.75rem 1rem;
     font-size: 0.85rem;
   }
