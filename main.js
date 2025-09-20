@@ -567,6 +567,7 @@
   // 카카오 CTA 링크 설정
   function setupKakaoLinks() {
     const kakaoButtons = document.querySelectorAll('.js-kakao-cta');
+    const floatingBtn = document.getElementById('kakao-floating');
 
     kakaoButtons.forEach(button => {
       if (!config.kakaoAppKey || !config.kakaoChannelPublicId) {
@@ -575,6 +576,14 @@
         button.rel = 'noopener noreferrer';
       }
     });
+
+    // 플로팅 버튼에도 카카오 링크 연결
+    if (floatingBtn && (!config.kakaoAppKey || !config.kakaoChannelPublicId)) {
+      floatingBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.open(config.kakaoChannelUrl, '_blank', 'noopener,noreferrer');
+      });
+    }
   }
 
   // 카카오 공식 위젯 설정

@@ -272,16 +272,16 @@ window.__SITE_CONFIG__ = {
 
   // 카카오 배너
   kakaoBanner: {
-    title: "카카오톡으로 빠른 상담",
-    caption: "구직청원휴가 관련 궁금한 점을 바로 해결하세요",
+    title: "카카오톡으로\n빠른 상담",
+    caption: "구직청원휴가 관련\n궁금한 점을\n바로 해결하세요",
     phoneMock: "assets/images/mock_up.png",
     cta: "카카오톡 상담하기"
   },
 
   // 최종 CTA
   finalCta: {
-    title: "지금 바로 구직청원휴가 신청하세요",
-    subtitle: "50% 이상 복무하신 모든 분들께 완벽한 서류 지원",
+    title: "지금 바로 구직청원휴가\n신청하세요",
+    subtitle: "50% 이상 복무하신 모든 분들께\n완벽한 서류 지원",
     cta: "무료 자가진단 시작하기"
   },
 

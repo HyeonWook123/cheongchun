@@ -262,7 +262,7 @@ a:hover {
 }
 
 .hero-headline {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -272,9 +272,10 @@ a:hover {
 }
 
 .hero-subcopy {
-  font-size: 1.25rem;
+  font-size: 1rem;
   color: var(--text-muted);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
 }
 
 .hero-cta {
@@ -284,19 +285,30 @@ a:hover {
   justify-content: center;
 }
 
+.hero-cta .btn {
+  flex: 1;
+  max-width: 200px;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
+}
+
 .hero-badges {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
   justify-content: center;
+  overflow-x: auto;
 }
 
 .hero-badge {
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   background: var(--bg);
   border-radius: var(--radius-xl);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
   box-shadow: var(--shadow);
 }
 
@@ -1176,29 +1188,12 @@ section {
 
 .process-timeline {
   margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  justify-items: center;
-}
-
-.process-step:nth-child(4),
-.process-step:nth-child(5) {
-  grid-column: span 1;
-}
-
-.process-step:nth-child(4) {
-  grid-column: 1;
-  grid-row: 2;
-  justify-self: center;
-  margin-right: 1rem;
-}
-
-.process-step:nth-child(5) {
-  grid-column: 3;
-  grid-row: 2;
-  justify-self: center;
-  margin-left: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .process-step {
@@ -1209,9 +1204,9 @@ section {
   text-align: center;
   position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 220px;
+  height: auto;
+  min-height: 120px;
   width: 100%;
-  max-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1803,9 +1798,9 @@ section {
   }
 
   .hero-headline {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     line-height: 1.1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     word-break: keep-all;
     padding: 0 0.1rem;
     white-space: pre-line;
@@ -1815,7 +1810,7 @@ section {
   }
 
   .hero-subcopy {
-    font-size: 1rem;
+    font-size: 0.85rem;
     margin-bottom: 1.5rem;
     line-height: 1.5;
     word-break: keep-all;
@@ -2030,37 +2025,41 @@ section {
     font-size: 0.9rem;
   }
 
+  .hero-cta {
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
   .hero-cta .btn {
-    width: 100%;
-    max-width: 100%;
+    flex: 1;
+    max-width: 45%;
+    font-size: 0.7rem;
+    padding: 0.5rem 0.4rem;
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+
+  .hero-badges {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .hero-badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
   }
 
   /* 프로세스 섹션 모바일 최적화 */
   .process-timeline {
-    display: flex !important;
-    flex-direction: column !important;
     gap: 1rem !important;
     margin-top: 1rem !important;
+    max-width: 100% !important;
   }
 
   .process-step {
-    height: auto !important;
-    min-height: 140px !important;
-    max-width: 100% !important;
-    width: 100% !important;
+    min-height: 100px !important;
     padding: 1rem !important;
-    margin: 0 !important;
-    grid-column: unset !important;
-    grid-row: unset !important;
-    justify-self: unset !important;
-  }
-
-  .process-step:nth-child(4),
-  .process-step:nth-child(5) {
-    grid-column: unset !important;
-    grid-row: unset !important;
-    justify-self: unset !important;
-    margin: 0 !important;
   }
 
   .step-title {
