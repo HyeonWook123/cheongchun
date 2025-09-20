@@ -20,8 +20,8 @@ window.__SITE_CONFIG__ = {
 
   // 히어로 섹션
   hero: {
-    headline: "구직청원휴가\n청춘도약일자리교육원에서\n쉽고 깔끔하게 해결하세요!",
-    subcopy: "50% 이상 복무하신 모든 군인분들께\n구직청원휴가 신청부터 승인까지 완벽 지원",
+    headline: "구직청원휴가\n간편하게 해결하세요!",
+    subcopy: "50% 이상 복무 군인분들께\n신청부터 승인까지 완벽 지원",
     image: "assets/images/hero_image.png",
     primaryCta: "무료 자가진단 시작",
     secondaryCta: "정부 근거 보기",
