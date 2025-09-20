@@ -1175,39 +1175,43 @@ section {
 }
 
 .process-timeline {
-  margin-top: 3rem;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
 .process-step {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 3rem;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.process-step:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
+.process-step:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
-.step-number {
-  flex-shrink: 0;
-  width: 60px;
-  height: 60px;
+.process-step .step-number {
+  width: 50px;
+  height: 50px;
   background: var(--brand);
   color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
+  margin: 0 auto 1rem auto;
 }
 
 .step-content {
-  flex: 1;
+  text-align: center;
 }
 
 .step-title {
@@ -1883,11 +1887,18 @@ section {
 
   /* 프로세스 타임라인 모바일 최적화 */
   .process-timeline {
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
   .process-step {
-    padding: 1rem;
+    padding: 1.25rem;
+  }
+
+  .process-step .step-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 
   /* 푸터 모바일 최적화 */
