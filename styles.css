@@ -239,10 +239,15 @@ a:hover {
 }
 
 .hero-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xl);
+  display: flex;
+  justify-content: center;
   align-items: center;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  width: 100%;
 }
 
 .hero-tagline {
@@ -276,12 +281,14 @@ a:hover {
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
+  justify-content: center;
 }
 
 .hero-badges {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .hero-badge {
@@ -291,6 +298,10 @@ a:hover {
   font-size: 0.875rem;
   font-weight: 500;
   box-shadow: var(--shadow);
+}
+
+.hero-visual {
+  display: none;
 }
 
 .hero-visual img {
@@ -1801,17 +1812,7 @@ section {
   }
 
   .hero-visual {
-    order: -1;
-    width: 100%;
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .hero-visual img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: var(--radius-lg);
+    display: none !important;
   }
 
   /* 슬라이더 모바일 최적화 */
