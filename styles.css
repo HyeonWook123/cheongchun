@@ -297,6 +297,68 @@ a:hover {
   background: var(--brand-dark);
 }
 
+/* 모바일 전용 서브 네비게이션 재정의 */
+@media screen and (max-width: 768px) {
+  .sub-nav {
+    padding: 0.4rem 0 !important;
+    background: var(--bg-light) !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .sub-nav-menu {
+    display: flex !important;
+    gap: 0.2rem !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    padding: 0 0.5rem !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .sub-nav-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.2rem !important;
+    padding: 0.4rem 0.2rem !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    max-width: calc(33.333% - 0.15rem) !important;
+    text-align: center !important;
+    border-radius: var(--radius) !important;
+    text-decoration: none !important;
+    color: var(--text) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .sub-nav-btn:hover {
+    background: var(--bg) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow) !important;
+  }
+
+  .sub-nav-icon {
+    font-size: 0.9rem !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .sub-nav-text {
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    word-break: keep-all !important;
+    overflow-wrap: break-word !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+}
+
 /* 페이지 공통 스타일 */
 .page-hero {
   background: var(--bg-light);
@@ -2077,30 +2139,6 @@ section {
     top: -9999px !important;
   }
 
-  /* 서브 네비게이션 모바일 최적화 */
-  .sub-nav {
-    padding: 0.25rem 0;
-  }
-
-  .sub-nav-menu {
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .sub-nav-btn {
-    padding: 0.5rem 1rem;
-    min-width: 100px;
-    gap: 0.5rem;
-  }
-
-  .sub-nav-icon {
-    font-size: 1rem;
-  }
-
-  .sub-nav-text {
-    font-size: 0.8rem;
-  }
 
   /* 히어로 섹션 모바일 최적화 */
   .hero {
@@ -2158,16 +2196,31 @@ section {
   }
 
   .hero-badges {
-    flex-direction: row;
-    gap: 0.25rem;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0.25rem !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    padding: 0 0.5rem !important;
+    overflow-x: hidden !important;
   }
 
   .hero-badge {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
-    white-space: nowrap;
+    font-size: 0.65rem !important;
+    padding: 0.3rem 0.4rem !important;
+    flex: 1 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: calc(33.333% - 0.17rem) !important;
+    box-sizing: border-box !important;
+    background: var(--bg) !important;
+    border-radius: var(--radius-xl) !important;
+    font-weight: 500 !important;
+    flex-shrink: 0 !important;
+    box-shadow: var(--shadow) !important;
   }
 
   .hero-visual {
@@ -2221,13 +2274,56 @@ section {
 
   /* 자가진단 모바일 최적화 */
   .diagnosis-categories {
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 0.25rem !important;
+    padding: 0 0.5rem !important;
+    justify-content: space-between !important;
+    align-items: stretch !important;
+    margin-bottom: 2rem !important;
   }
 
   .diagnosis-category {
-    min-width: 100px;
-    flex: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.3rem !important;
+    padding: 0.6rem 0.25rem !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    max-width: calc(33.333% - 0.17rem) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    background: white !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .diagnosis-category:hover,
+  .diagnosis-category.active {
+    border-color: var(--brand) !important;
+    background: var(--brand-light) !important;
+  }
+
+  .category-icon {
+    font-size: 1.2rem !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .category-title {
+    font-size: 0.65rem !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+    text-align: center !important;
+    word-break: keep-all !important;
+    overflow-wrap: break-word !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .question-navigation {
@@ -2238,6 +2334,11 @@ section {
   .question-navigation .btn {
     width: 100%;
     min-width: auto;
+  }
+
+  .diagnosis-form-container {
+    padding: 0 1rem;
+    margin: 0 auto;
   }
 
   /* 프로세스 타임라인 모바일 최적화 */
@@ -2303,11 +2404,13 @@ section {
   }
 }
 
+
 /* 작은 모바일 화면 (375px 이하) 추가 최적화 */
 @media (max-width: 375px) {
   .container {
     padding: 0 0.75rem;
   }
+
 
   .hero-headline {
     padding: 0 0.1rem;
@@ -2426,13 +2529,8 @@ section {
   .container {
     padding: 0 0.5rem;
   }
+}
 
-  .hero-headline {
-    font-size: 0.85rem;
-    line-height: 1.05;
-    padding: 0;
-    margin-bottom: 0.75rem;
-  }
 
   .hero-subcopy {
     font-size: 0.85rem;
