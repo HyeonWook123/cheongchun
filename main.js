@@ -287,7 +287,7 @@
     }
   }
 
-  // 기존 증빙 슬라이더 렌더링 (기존 코드 유지)
+  // 증빙 슬라이더 렌더링 (올바른 3개씩 보이는 로직)
   function renderProofSlider() {
     const title = document.getElementById('proof-title');
     const subtitle = document.getElementById('proof-subtitle');
@@ -298,109 +298,39 @@
     if (subtitle) subtitle.textContent = config.proofs.subtitle;
 
     if (container) {
-      // 순환형 슬라이더를 위해 이미지 복제
-      const images = config.proofs.images;
+      const images = config.proofs.images; // [1, 2, 3, 4]
+
+      // 완벽한 무한 루프: 시작점과 끝점이 동일하게
+      // [1,2,3] → [2,3,4] → [3,4,1] → [4,1,2] → [1,2,3] (다시 처음과 동일)
       const extendedImages = [
-        images[images.length - 1],
-        ...images,
-        images[0]
-      ];
+        ...images,     // [1, 2, 3, 4]
+        images[0],     // [1] - 루프 완성을 위해
+        images[1],     // [2] - 루프 완성을 위해
+        images[2]      // [3] - 루프 완성을 위해
+      ]; // 최종: [1, 2, 3, 4, 1, 2, 3]
 
       container.innerHTML = extendedImages.map((img, index) => `
         <div class="slider-slide">
-          <img src="${img}" alt="증빙 자료 ${((index - 1 + images.length) % images.length) + 1}" loading="lazy">
+          <img src="${img}" alt="증빙 자료" loading="lazy">
         </div>
       `).join('');
     }
-
-    if (dots) {
-      dots.innerHTML = config.proofs.images.map((_, index) => `
-        <span class="slider-dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>
-      `).join('');
-    }
-
-    // 슬라이더 기능 설정
-    setupSlider();
   }
 
-  // 슬라이더 기능 (기존 코드 유지)
+  // CSS 애니메이션으로 완전 자동화된 무한 슬라이더
   function setupSlider() {
     const container = document.getElementById('slider-container');
-    const prevBtn = document.getElementById('slider-prev');
-    const nextBtn = document.getElementById('slider-next');
-    const dots = document.querySelectorAll('.slider-dot');
 
     if (!container) return;
 
-    let currentSlide = 0;
-    const totalSlides = config.proofs.images.length;
-    const slideWidth = 33.333 + 0.7;
-    let realPosition = 1;
-
-    container.style.transform = `translateX(-${slideWidth}%)`;
-
-    function goToSlide(targetSlide) {
-      currentSlide = targetSlide;
-      realPosition = targetSlide + 1;
-      container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
-      });
-    }
-
-    function resetPosition() {
-      container.style.transition = 'none';
-      if (realPosition === 0) {
-        realPosition = totalSlides;
-        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-      } else if (realPosition === totalSlides + 1) {
-        realPosition = 1;
-        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-      }
-      setTimeout(() => {
-        container.style.transition = 'transform 0.5s ease';
-      }, 10);
-    }
-
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        realPosition--;
-        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentSlide);
-        });
-        setTimeout(resetPosition, 500);
-      });
-    }
-
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        realPosition++;
-        container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-        dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentSlide);
-        });
-        setTimeout(resetPosition, 500);
-      });
-    }
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => goToSlide(index));
+    // 호버 시 애니메이션 일시정지 (사용자 편의성)
+    container.addEventListener('mouseenter', () => {
+      container.style.animationPlayState = 'paused';
     });
 
-    // 자동 슬라이드
-    setInterval(() => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      realPosition++;
-      container.style.transform = `translateX(-${realPosition * slideWidth}%)`;
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSlide);
-      });
-      setTimeout(resetPosition, 500);
-    }, 3000);
+    container.addEventListener('mouseleave', () => {
+      container.style.animationPlayState = 'running';
+    });
   }
 
   // 후기 섹션 렌더링
