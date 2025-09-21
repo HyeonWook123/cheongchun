@@ -439,21 +439,21 @@
       list.addEventListener('click', function(e) {
         const question = e.target.closest('.faq-question');
         if (question) {
+          const faqItem = question.closest('.faq-item');
           const index = question.dataset.faq;
-          const answer = list.querySelector(`[data-faq="${index}"].faq-answer`);
           const toggle = question.querySelector('.faq-toggle');
 
-          if (answer) {
-            const isOpen = answer.classList.contains('open');
+          if (faqItem) {
+            const isActive = faqItem.classList.contains('active');
 
             // 모든 FAQ 닫기
-            list.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            list.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
             list.querySelectorAll('.faq-toggle').forEach(t => t.textContent = '+');
 
             // 클릭된 FAQ 토글
-            if (!isOpen) {
-              answer.classList.add('open');
-              toggle.textContent = '−';
+            if (!isActive) {
+              faqItem.classList.add('active');
+              toggle.textContent = '+';
             }
           }
         }
