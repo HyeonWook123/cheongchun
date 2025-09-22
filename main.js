@@ -404,50 +404,100 @@
     }
   }
 
-  // 증빙 슬라이더 렌더링 (올바른 3개씩 보이는 로직)
+  // 증빙 슬라이더 렌더링 (수동 네비게이션 - 한 개씩)
   function renderProofSlider() {
     const title = document.getElementById('proof-title');
     const subtitle = document.getElementById('proof-subtitle');
     const container = document.getElementById('slider-container');
     const dots = document.getElementById('slider-dots');
+    const prevBtn = document.getElementById('slider-prev');
+    const nextBtn = document.getElementById('slider-next');
 
     if (title) title.textContent = config.proofs.title;
     if (subtitle) subtitle.textContent = config.proofs.subtitle;
 
-    if (container) {
-      const images = config.proofs.images; // [1, 2, 3, 4]
+    if (container && config.proofs.images) {
+      const images = config.proofs.images;
 
-      // 완벽한 무한 루프: 시작점과 끝점이 동일하게
-      // [1,2,3] → [2,3,4] → [3,4,1] → [4,1,2] → [1,2,3] (다시 처음과 동일)
-      const extendedImages = [
-        ...images,     // [1, 2, 3, 4]
-        images[0],     // [1] - 루프 완성을 위해
-        images[1],     // [2] - 루프 완성을 위해
-        images[2]      // [3] - 루프 완성을 위해
-      ]; // 최종: [1, 2, 3, 4, 1, 2, 3]
-
-      container.innerHTML = extendedImages.map((img, index) => `
-        <div class="slider-slide">
-          <img src="${img}" alt="증빙 자료" loading="lazy">
+      // 슬라이드 생성
+      container.innerHTML = images.map((img, index) => `
+        <div class="slider-slide" data-slide="${index}">
+          <img src="${img}" alt="증빙 자료 ${index + 1}" loading="lazy">
         </div>
       `).join('');
+
+      // 도트 네비게이션 생성 (4개)
+      if (dots) {
+        dots.innerHTML = images.map((_, index) => `
+          <button class="dot ${index === 0 ? 'active' : ''}" data-slide="${index}" aria-label="슬라이드 ${index + 1}"></button>
+        `).join('');
+      }
+
+      // 슬라이더 초기화 및 이벤트 설정
+      let currentSlide = 0;
+      const totalSlides = images.length;
+
+      function showSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+
+        const offset = index * 100;
+        container.style.transform = `translateX(-${offset}%)`;
+
+        // 도트 업데이트
+        if (dots) {
+          dots.querySelectorAll('.dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        }
+
+        currentSlide = index;
+      }
+
+      // 이전/다음 버튼 이벤트
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+      }
+
+      // 도트 네비게이션 이벤트
+      if (dots) {
+        dots.addEventListener('click', (e) => {
+          if (e.target.classList.contains('dot')) {
+            const slideIndex = parseInt(e.target.dataset.slide);
+            showSlide(slideIndex);
+          }
+        });
+      }
+
+      // 터치/스와이프 지원
+      let startX = 0;
+      let isDragging = false;
+
+      container.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      container.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            showSlide(currentSlide + 1);
+          } else {
+            showSlide(currentSlide - 1);
+          }
+        }
+
+        isDragging = false;
+      });
     }
-  }
-
-  // CSS 애니메이션으로 완전 자동화된 무한 슬라이더
-  function setupSlider() {
-    const container = document.getElementById('slider-container');
-
-    if (!container) return;
-
-    // 호버 시 애니메이션 일시정지 (사용자 편의성)
-    container.addEventListener('mouseenter', () => {
-      container.style.animationPlayState = 'paused';
-    });
-
-    container.addEventListener('mouseleave', () => {
-      container.style.animationPlayState = 'running';
-    });
   }
 
 
