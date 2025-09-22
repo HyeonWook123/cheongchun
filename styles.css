@@ -1338,24 +1338,33 @@ section {
 .floating-button {
   position: fixed;
   bottom: 2rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
-  background: #fee500;
-  color: #3c1e1e;
-  border-radius: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(31, 111, 255, 0.4);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   z-index: 999;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
 }
 
 .floating-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 6px 30px rgba(31, 111, 255, 0.5);
+  background: linear-gradient(135deg, var(--brand-dark) 0%, var(--brand) 100%);
+}
+
+.floating-button-text {
+  white-space: nowrap;
 }
 
 /* 모바일 전용 스마트 스티커 CTA */
@@ -2336,7 +2345,9 @@ section {
   }
 
   .floating-button {
-    display: none;
+    bottom: 1.5rem;
+    padding: 0.8rem 2rem;
+    font-size: 0.95rem;
   }
 }
 

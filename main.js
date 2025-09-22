@@ -21,17 +21,17 @@
     // 3. 서류 샘플 섹션 렌더링
     renderDocumentSamples();
 
-    // 4. 프로세스 가이드 렌더링
+    // 4. 카카오 배너 렌더링
+    renderKakaoBanner();
+
+    // 5. 프로세스 가이드 렌더링
     renderProcessGuide();
 
-    // 5. 기존 증빙 슬라이더 렌더링
+    // 6. 기존 증빙 슬라이더 렌더링
     renderProofSlider();
 
-    // 6. 가격 섹션 렌더링
+    // 7. 가격 섹션 렌더링
     renderPricingSection();
-
-    // 7. 카카오 배너 렌더링
-    renderKakaoBanner();
 
     // 8. FAQ 섹션 렌더링
     renderFAQSection();
