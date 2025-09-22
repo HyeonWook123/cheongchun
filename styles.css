@@ -252,8 +252,42 @@ a:hover {
 }
 
 .hero {
-  background: linear-gradient(135deg, #e8f2ff 0%, #f0f7ff 100%);
+  background-image: url('assets/images/b7f4fd81d147b0c0febb22f073b1365c.jpg');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
   padding: clamp(2rem, 8vw, 4rem) 0;
+  position: relative;
+}
+
+/* 텍스트 가독성을 위한 오버레이 */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(232, 242, 255, 0.7) 0%, rgba(240, 247, 255, 0.7) 100%);
+  pointer-events: none;
+}
+
+/* 히어로 콘텐츠를 오버레이 위로 */
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  .hero {
+    background-position: center center;
+    background-attachment: scroll;
+  }
+
+  .hero::before {
+    background: linear-gradient(135deg, rgba(232, 242, 255, 0.8) 0%, rgba(240, 247, 255, 0.8) 100%);
+  }
 }
 
 .self-diagnosis {
@@ -622,7 +656,6 @@ a:hover {
 
 .hero {
   padding: var(--spacing-xl) 0;
-  background: linear-gradient(135deg, #e8f2ff 0%, #f0f7ff 100%);
 }
 
 .hero-inner {

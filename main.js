@@ -66,7 +66,6 @@
     const headline = document.getElementById('hero-headline');
     const subcopy = document.getElementById('hero-subcopy');
     const primaryCta = document.getElementById('hero-primary-cta');
-    const secondaryCta = document.getElementById('hero-secondary-cta');
     const badges = document.getElementById('hero-badges');
     const image = document.getElementById('hero-image');
 
@@ -74,7 +73,6 @@
     if (headline) headline.textContent = config.hero.headline;
     if (subcopy) subcopy.textContent = config.hero.subcopy;
     if (primaryCta) primaryCta.textContent = config.hero.primaryCta;
-    if (secondaryCta) secondaryCta.textContent = config.hero.secondaryCta;
 
     if (badges && config.hero.badges) {
       badges.innerHTML = config.hero.badges.map(badge =>

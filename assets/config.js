@@ -24,7 +24,6 @@ window.__SITE_CONFIG__ = {
     subcopy: "50% 이상 복무하신 모든 분들께\n신청부터 승인까지 완벽한 서류 지원",
     image: "assets/images/hero_image.png",
     primaryCta: "무료 자가진단 시작",
-    secondaryCta: "정부 근거 보기",
     badges: [
       "평균 승인률 95%",
       "신청 당일 서류발급",
