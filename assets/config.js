@@ -14,8 +14,9 @@ window.__SITE_CONFIG__ = {
   // 연락처 정보
   contact: {
     phone: "010-0000-0000",
-    email: "hello@example.com",
+    email: "mystaryoyo4@naver.com",
     address: "서울시 ○○구 ○○로 00",
+    businessNumber: "455-12-52943",
   },
 
   // 히어로 섹션

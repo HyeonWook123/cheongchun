@@ -392,8 +392,8 @@
     if (timeline && config.process.steps) {
       timeline.innerHTML = config.process.steps.map((step, index) => `
         <div class="process-step">
-          <div class="step-number">${index + 1}</div>
           <div class="step-content">
+            <div class="step-number">${index + 1}</div>
             <h3 class="step-title">${step.title}</h3>
             <p class="step-description">${step.description}</p>
           </div>
@@ -606,6 +606,8 @@
     const phone = document.getElementById('footer-phone');
     const email = document.getElementById('footer-email');
     const address = document.getElementById('footer-address');
+    const businessNumber = document.getElementById('footer-business-number');
+    const bankAccount = document.getElementById('footer-bank-account');
     const links = document.getElementById('footer-links');
     const copyright = document.getElementById('footer-copyright');
 
@@ -613,6 +615,8 @@
     if (phone) phone.textContent = config.contact.phone;
     if (email) email.textContent = config.contact.email;
     if (address) address.textContent = config.contact.address;
+    if (businessNumber) businessNumber.textContent = `사업자등록번호: ${config.contact.businessNumber}`;
+    if (bankAccount && config.contact.bankAccount) bankAccount.textContent = `계좌번호: ${config.contact.bankAccount}`;
     if (copyright) copyright.textContent = config.footer.copyright;
 
     if (links && config.footer.links) {
