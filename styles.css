@@ -853,11 +853,120 @@ section {
   font-weight: bold;
 }
 
-/* 증빙 슬라이더 */
+/* 증빙 슬라이더 (새로운 스타일) */
 .proof {
   background: var(--bg);
+  padding: var(--spacing-xxl) 0;
 }
 
+/* 새로운 슬라이더 구현 */
+.proof-slider-new {
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.proof-slides {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: white;
+}
+
+.proof-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.proof-slide.active {
+  opacity: 1;
+}
+
+.proof-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.proof-controls {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  pointer-events: none;
+}
+
+.proof-btn-prev,
+.proof-btn-next {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.proof-btn-prev:hover,
+.proof-btn-next:hover {
+  background: white;
+  transform: scale(1.1);
+}
+
+.proof-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.proof-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.proof-dot.active {
+  background: var(--brand);
+  width: 24px;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .proof-slides {
+    height: 350px;
+  }
+
+  .proof-btn-prev,
+  .proof-btn-next {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+/* 기존 슬라이더 스타일 (나중에 제거 예정) */
 .slider {
   position: relative;
   overflow: visible;

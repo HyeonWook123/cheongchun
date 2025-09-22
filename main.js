@@ -402,100 +402,92 @@
     }
   }
 
-  // 증빙 슬라이더 렌더링 (수동 네비게이션 - 한 개씩)
+  // 증빙 자료 슬라이더 (새로운 구현)
   function renderProofSlider() {
-    const title = document.getElementById('proof-title');
-    const subtitle = document.getElementById('proof-subtitle');
-    const container = document.getElementById('slider-container');
-    const dots = document.getElementById('slider-dots');
-    const prevBtn = document.getElementById('slider-prev');
-    const nextBtn = document.getElementById('slider-next');
+    const section = document.getElementById('proof');
+    if (!section) return;
 
-    if (title) title.textContent = config.proofs.title;
-    if (subtitle) subtitle.textContent = config.proofs.subtitle;
-
-    if (container && config.proofs.images) {
-      const images = config.proofs.images;
-
-      // 슬라이드 생성
-      container.innerHTML = images.map((img, index) => `
-        <div class="slider-slide" data-slide="${index}">
-          <img src="${img}" alt="증빙 자료 ${index + 1}" loading="lazy">
+    // 섹션 내용 완전히 재구성
+    section.innerHTML = `
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">${config.proofs.title}</h2>
+          <p class="section-subtitle">${config.proofs.subtitle}</p>
         </div>
-      `).join('');
+        <div class="proof-slider-new">
+          <div class="proof-slides">
+            ${config.proofs.images.map((img, index) => `
+              <div class="proof-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
+                <img src="${img}" alt="서류 ${index + 1}">
+              </div>
+            `).join('')}
+          </div>
+          <div class="proof-controls">
+            <button class="proof-btn-prev" aria-label="이전">‹</button>
+            <button class="proof-btn-next" aria-label="다음">›</button>
+          </div>
+          <div class="proof-indicators">
+            ${config.proofs.images.map((_, index) => `
+              <button class="proof-dot ${index === 0 ? 'active' : ''}" data-index="${index}" aria-label="슬라이드 ${index + 1}"></button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    `;
 
-      // 도트 네비게이션 생성 (4개)
-      if (dots) {
-        dots.innerHTML = images.map((_, index) => `
-          <button class="dot ${index === 0 ? 'active' : ''}" data-slide="${index}" aria-label="슬라이드 ${index + 1}"></button>
-        `).join('');
-      }
+    // 슬라이더 로직
+    let currentIndex = 0;
+    const slides = section.querySelectorAll('.proof-slide');
+    const dots = section.querySelectorAll('.proof-dot');
+    const prevBtn = section.querySelector('.proof-btn-prev');
+    const nextBtn = section.querySelector('.proof-btn-next');
+    const totalSlides = slides.length;
 
-      // 슬라이더 초기화 및 이벤트 설정
-      let currentSlide = 0;
-      const totalSlides = images.length;
+    function updateSlider(index) {
+      // 범위 체크
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
 
-      function showSlide(index) {
-        if (index < 0) index = totalSlides - 1;
-        if (index >= totalSlides) index = 0;
+      // 모든 슬라이드 숨기기
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
 
-        const offset = index * 100;
-        container.style.transform = `translateX(-${offset}%)`;
+      // 현재 슬라이드 표시
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
 
-        // 도트 업데이트
-        if (dots) {
-          dots.querySelectorAll('.dot').forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-          });
-        }
-
-        currentSlide = index;
-      }
-
-      // 이전/다음 버튼 이벤트
-      if (prevBtn) {
-        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
-      }
-      if (nextBtn) {
-        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
-      }
-
-      // 도트 네비게이션 이벤트
-      if (dots) {
-        dots.addEventListener('click', (e) => {
-          if (e.target.classList.contains('dot')) {
-            const slideIndex = parseInt(e.target.dataset.slide);
-            showSlide(slideIndex);
-          }
-        });
-      }
-
-      // 터치/스와이프 지원
-      let startX = 0;
-      let isDragging = false;
-
-      container.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-      });
-
-      container.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-
-        const endX = e.changedTouches[0].clientX;
-        const diff = startX - endX;
-
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            showSlide(currentSlide + 1);
-          } else {
-            showSlide(currentSlide - 1);
-          }
-        }
-
-        isDragging = false;
-      });
+      currentIndex = index;
     }
+
+    // 버튼 이벤트
+    prevBtn.addEventListener('click', () => updateSlider(currentIndex - 1));
+    nextBtn.addEventListener('click', () => updateSlider(currentIndex + 1));
+
+    // 도트 클릭
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => updateSlider(index));
+    });
+
+    // 터치 스와이프
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    section.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    section.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          updateSlider(currentIndex + 1); // 왼쪽 스와이프 = 다음
+        } else {
+          updateSlider(currentIndex - 1); // 오른쪽 스와이프 = 이전
+        }
+      }
+    });
   }
 
 
