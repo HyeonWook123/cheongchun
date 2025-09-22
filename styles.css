@@ -869,12 +869,12 @@ section {
   overflow: hidden;
   border-radius: var(--radius-lg);
   position: relative;
+  width: 100%;
 }
 
 .slider-container {
   display: flex;
-  gap: 1rem;
-  padding: 0 0.5rem;
+  gap: 0;
   transition: transform 0.4s ease;
 }
 
@@ -895,7 +895,11 @@ section {
 
 @media (max-width: 768px) {
   .slider-slide img {
-    height: 400px;
+    height: 350px;
+  }
+
+  .slider-slide {
+    padding: 0 10px;
   }
 }
 
