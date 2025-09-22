@@ -876,11 +876,13 @@ section {
   display: flex;
   gap: 0;
   transition: transform 0.4s ease;
+  -webkit-transform: translateZ(0); /* 하드웨어 가속 */
+  transform: translateZ(0);
 }
 
 .slider-slide {
   min-width: 100%;
-  flex-shrink: 0;
+  flex: 0 0 100%; /* flex-shrink와 flex-basis를 명시적으로 설정 */
   width: 100%;
 }
 
@@ -899,12 +901,19 @@ section {
     height: 350px;
     width: 100%;
     max-width: 100%;
+    object-fit: contain;
   }
 
   .slider-slide {
     padding: 0;
-    width: 100%;
-    min-width: 100%;
+    width: 100vw; /* viewport width 사용 */
+    min-width: 100vw;
+    flex: 0 0 100vw;
+  }
+
+  .slider-wrapper {
+    width: 100vw;
+    margin-left: calc(-1 * (100vw - 100%) / 2);
   }
 }
 
