@@ -409,7 +409,6 @@ window.__SITE_CONFIG__ = {
     subtitle: "합격자들의 생생한 후기",
     images: [
       "assets/images/certification_1.jpeg",
-      "assets/images/certification_2.jpeg",
       "assets/images/certification_3.jpeg",
       "assets/images/certification_4.jpeg"
     ]
