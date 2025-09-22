@@ -40,7 +40,7 @@ window.__SITE_CONFIG__ = {
       {
         id: "military-job",
         title: "군인 구직휴가",
-        icon: "🎖️",
+        icon: "🇰🇷",
         active: true
       },
       {
@@ -56,6 +56,114 @@ window.__SITE_CONFIG__ = {
         active: false
       }
     ],
+    // 카테고리별 질문 세트
+    forms: {
+      "military-job": {
+        questions: [
+          {
+            id: "branch",
+            title: "군종을 선택해주세요",
+            type: "radio",
+            options: ["육군", "해군", "공군", "해병대"]
+          },
+          {
+            id: "rank",
+            title: "현재 계급 및 복무 현황",
+            type: "radio",
+            options: [
+              "병장 (복무 50% 이상)",
+              "상병 (복무 50% 이상)",
+              "일병 (복무 50% 미만)",
+              "이병 (복무 50% 미만)"
+            ]
+          },
+          {
+            id: "used_leave",
+            title: "구직청원휴가 사용 경험",
+            type: "radio",
+            options: ["처음 신청", "재신청"]
+          },
+          {
+            id: "consultation_type",
+            title: "선호하는 상담 방식",
+            type: "radio",
+            options: ["비대면 (화상/전화)", "대면 상담"]
+          }
+        ],
+        result: {
+          title: "구직청원휴가 신청이 가능합니다!",
+          subtitle: "50% 이상 복무하신 분은 모두 신청 가능하며, 저희가 도와드리겠습니다.",
+          cta: "상담 예약하러 가기"
+        }
+      },
+      "startup": {
+        questions: [
+          {
+            id: "startup_stage",
+            title: "현재 창업 준비 단계는?",
+            type: "radio",
+            options: ["아이디어 구상", "사업계획서 작성", "자금 조달", "실행 단계"]
+          },
+          {
+            id: "startup_field",
+            title: "희망하는 창업 분야는?",
+            type: "radio",
+            options: ["IT/테크", "요식업", "유통/판매", "서비스업", "기타"]
+          },
+          {
+            id: "startup_experience",
+            title: "창업 경험이 있으신가요?",
+            type: "radio",
+            options: ["처음 도전", "경험 있음", "현재 운영 중"]
+          },
+          {
+            id: "startup_support",
+            title: "필요한 지원 분야는?",
+            type: "radio",
+            options: ["자금 지원", "멘토링", "공간 지원", "네트워킹"]
+          }
+        ],
+        result: {
+          title: "창업 지원 프로그램에 참여 가능합니다!",
+          subtitle: "군 복무 중에도 창업 준비를 체계적으로 도와드립니다.",
+          cta: "창업 상담 예약하기"
+        }
+      },
+      "education": {
+        questions: [
+          {
+            id: "edu_target",
+            title: "준비하는 입시 유형은?",
+            type: "radio",
+            options: ["대학 편입", "대학원 진학", "공무원 시험", "자격증 취득"]
+          },
+          {
+            id: "edu_field",
+            title: "희망하는 전공/분야는?",
+            type: "radio",
+            options: ["인문계열", "자연계열", "공학계열", "예체능계열", "기타"]
+          },
+          {
+            id: "edu_preparation",
+            title: "현재 준비 정도는?",
+            type: "radio",
+            options: ["기초 학습 중", "심화 학습 중", "실전 연습 중", "막 시작"]
+          },
+          {
+            id: "edu_schedule",
+            title: "목표 시기는?",
+            type: "radio",
+            options: ["올해 하반기", "내년 상반기", "내년 하반기", "미정"]
+          }
+        ],
+        result: {
+          title: "입시 준비 지원이 가능합니다!",
+          subtitle: "군 복무와 병행하며 체계적인 입시 준비를 도와드립니다.",
+          cta: "입시 상담 예약하기"
+        }
+      }
+    },
+    // 기본 form (backward compatibility)
     form: {
       questions: [
         {

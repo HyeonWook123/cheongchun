@@ -27,37 +27,34 @@
     // 5. 기존 증빙 슬라이더 렌더링
     renderProofSlider();
 
-    // 6. 후기 섹션 렌더링
-    renderReviewsSection();
-
-    // 7. 가격 섹션 렌더링
+    // 6. 가격 섹션 렌더링
     renderPricingSection();
 
-    // 8. 카카오 배너 렌더링
+    // 7. 카카오 배너 렌더링
     renderKakaoBanner();
 
-    // 9. FAQ 섹션 렌더링
+    // 8. FAQ 섹션 렌더링
     renderFAQSection();
 
-    // 10. 최종 CTA 렌더링
+    // 9. 최종 CTA 렌더링
     renderFinalCTA();
 
-    // 11. 푸터 렌더링
+    // 10. 푸터 렌더링
     renderFooter();
 
-    // 12. 카카오 CTA 링크 설정
+    // 11. 카카오 CTA 링크 설정
     setupKakaoLinks();
 
-    // 13. 카카오 공식 위젯 설정 (옵션)
+    // 12. 카카오 공식 위젯 설정 (옵션)
     setupKakaoWidget();
 
-    // 14. 모바일 메뉴 토글
+    // 13. 모바일 메뉴 토글
     setupMobileMenu();
 
-    // 15. 이미지 지연 로딩
+    // 14. 이미지 지연 로딩
     setupLazyLoading();
 
-    // 16. 스크롤 애니메이션
+    // 15. 스크롤 애니메이션
     setupScrollAnimations();
 
     console.log('청춘도약일자리교육원 웹사이트 로드 완료');
@@ -104,6 +101,20 @@
     if (title) title.textContent = config.selfDiagnosis.title;
     if (subtitle) subtitle.textContent = config.selfDiagnosis.subtitle;
 
+    // 현재 선택된 카테고리 추적
+    let currentCategory = 'military-job';
+    let currentQuestionIndex = 0;
+    let userAnswers = {};
+
+    // 현재 카테고리의 form 데이터 가져오기
+    function getCurrentForm() {
+      if (config.selfDiagnosis.forms && config.selfDiagnosis.forms[currentCategory]) {
+        return config.selfDiagnosis.forms[currentCategory];
+      }
+      // fallback to default form
+      return config.selfDiagnosis.form;
+    }
+
     // 카테고리 탭 렌더링
     if (categories && config.selfDiagnosis.categories) {
       categories.innerHTML = config.selfDiagnosis.categories.map(category => `
@@ -117,90 +128,107 @@
       categories.addEventListener('click', function(e) {
         const categoryBtn = e.target.closest('.diagnosis-category');
         if (categoryBtn) {
-          // 모든 카테고리 비활성화
-          categories.querySelectorAll('.diagnosis-category').forEach(btn =>
-            btn.classList.remove('active')
-          );
-          // 클릭된 카테고리 활성화
-          categoryBtn.classList.add('active');
+          const newCategory = categoryBtn.dataset.category;
+
+          // 카테고리가 변경된 경우에만 처리
+          if (newCategory !== currentCategory) {
+            // 모든 카테고리 비활성화
+            categories.querySelectorAll('.diagnosis-category').forEach(btn =>
+              btn.classList.remove('active')
+            );
+            // 클릭된 카테고리 활성화
+            categoryBtn.classList.add('active');
+
+            // 카테고리 변경
+            currentCategory = newCategory;
+            currentQuestionIndex = 0;
+            userAnswers = {};
+
+            // 결과 화면 숨기고 폼 다시 표시
+            const form = document.getElementById('diagnosis-form');
+            const result = document.getElementById('diagnosis-result');
+            if (form) form.style.display = 'block';
+            if (result) result.style.display = 'none';
+
+            // 새 카테고리의 질문 렌더링
+            renderCurrentQuestion();
+            updateResultText();
+          }
         }
       });
     }
 
-    // 진단 질문 단계별 렌더링
-    let currentQuestionIndex = 0;
-    const totalQuestions = config.selfDiagnosis.form.questions.length;
-    const userAnswers = {};
-
     function renderCurrentQuestion() {
-      if (questions && config.selfDiagnosis.form.questions) {
-        const question = config.selfDiagnosis.form.questions[currentQuestionIndex];
+      const currentForm = getCurrentForm();
+      if (!questions || !currentForm || !currentForm.questions) return;
 
-        questions.innerHTML = `
-          <div class="diagnosis-question active">
-            <div class="question-progress">
-              <span class="progress-text">${currentQuestionIndex + 1} / ${totalQuestions}</span>
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: ${((currentQuestionIndex + 1) / totalQuestions) * 100}%"></div>
-              </div>
+      const totalQuestions = currentForm.questions.length;
+      const question = currentForm.questions[currentQuestionIndex];
+
+      questions.innerHTML = `
+        <div class="diagnosis-question active">
+          <div class="question-progress">
+            <span class="progress-text">${currentQuestionIndex + 1} / ${totalQuestions}</span>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${((currentQuestionIndex + 1) / totalQuestions) * 100}%"></div>
             </div>
-            <h4 class="question-title">${question.title}</h4>
-            <div class="question-options">
-              ${question.options.map((option, optionIndex) => `
-                <label class="option-label">
-                  <input type="radio" name="current_question" value="${optionIndex}" required>
-                  <span class="option-text">${option}</span>
-                </label>
-              `).join('')}
-            </div>
-            ${currentQuestionIndex > 0 ? `
-            <div class="question-navigation">
-              <button type="button" class="btn btn-outline prev-question">이전</button>
-            </div>` : ''}
           </div>
-        `;
+          <h4 class="question-title">${question.title}</h4>
+          <div class="question-options">
+            ${question.options.map((option, optionIndex) => `
+              <label class="option-label">
+                <input type="radio" name="current_question" value="${optionIndex}" required>
+                <span class="option-text">${option}</span>
+              </label>
+            `).join('')}
+          </div>
+          ${currentQuestionIndex > 0 ? `
+          <div class="question-navigation">
+            <button type="button" class="btn btn-outline prev-question">이전</button>
+          </div>` : ''}
+        </div>
+      `;
 
-        // 라디오 버튼 선택 이벤트
-        const radioButtons = questions.querySelectorAll('input[type="radio"]');
-        const prevBtn = questions.querySelector('.prev-question');
+      // 라디오 버튼 선택 이벤트
+      const radioButtons = questions.querySelectorAll('input[type="radio"]');
+      const prevBtn = questions.querySelector('.prev-question');
 
-        radioButtons.forEach(radio => {
-          radio.addEventListener('change', function() {
-            if (this.checked) {
-              userAnswers[`question_${currentQuestionIndex}`] = this.value;
+      radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+          if (this.checked) {
+            userAnswers[`question_${currentQuestionIndex}`] = this.value;
 
-              // 자동으로 다음 질문으로 진행 (0.8초 딜레이)
-              setTimeout(() => {
-                if (currentQuestionIndex < totalQuestions - 1) {
-                  currentQuestionIndex++;
-                  renderCurrentQuestion();
-                } else {
-                  // 마지막 질문 완료 - 결과 자동 표시
-                  showDiagnosisResult();
-                }
-              }, 800);
-            }
-          });
+            // 자동으로 다음 질문으로 진행 (0.8초 딜레이)
+            setTimeout(() => {
+              if (currentQuestionIndex < totalQuestions - 1) {
+                currentQuestionIndex++;
+                renderCurrentQuestion();
+              } else {
+                // 마지막 질문 완료 - 결과 자동 표시
+                showDiagnosisResult();
+              }
+            }, 800);
+          }
         });
+      });
 
-        // 이전 버튼 이벤트
-        if (prevBtn) {
-          prevBtn.addEventListener('click', function() {
-            if (currentQuestionIndex > 0) {
-              currentQuestionIndex--;
-              renderCurrentQuestion();
+      // 이전 버튼 이벤트
+      if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+          if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderCurrentQuestion();
 
-              // 이전 답변 복원
-              const prevAnswer = userAnswers[`question_${currentQuestionIndex}`];
-              if (prevAnswer !== undefined) {
-                const prevRadio = questions.querySelector(`input[value="${prevAnswer}"]`);
-                if (prevRadio) {
-                  prevRadio.checked = true;
-                }
+            // 이전 답변 복원
+            const prevAnswer = userAnswers[`question_${currentQuestionIndex}`];
+            if (prevAnswer !== undefined) {
+              const prevRadio = questions.querySelector(`input[value="${prevAnswer}"]`);
+              if (prevRadio) {
+                prevRadio.checked = true;
               }
             }
-          });
-        }
+          }
+        });
       }
     }
 
@@ -215,14 +243,18 @@
       }
     }
 
+    function updateResultText() {
+      const currentForm = getCurrentForm();
+      if (!currentForm || !currentForm.result) return;
+
+      if (resultTitle) resultTitle.textContent = currentForm.result.title;
+      if (resultSubtitle) resultSubtitle.textContent = currentForm.result.subtitle;
+      if (resultCta) resultCta.textContent = currentForm.result.cta;
+    }
+
     // 초기 질문 렌더링
     renderCurrentQuestion();
-
-    // 결과 텍스트 설정
-    if (resultTitle) resultTitle.textContent = config.selfDiagnosis.form.result.title;
-    if (resultSubtitle) resultSubtitle.textContent = config.selfDiagnosis.form.result.subtitle;
-    if (resultCta) resultCta.textContent = config.selfDiagnosis.form.result.cta;
-
+    updateResultText();
   }
 
   // 서류 샘플 섹션 렌더링
@@ -235,30 +267,115 @@
     if (subtitle) subtitle.textContent = config.documentSamples.subtitle;
 
     if (grid && config.documentSamples.documents) {
-      grid.innerHTML = config.documentSamples.documents.map(doc => `
-        <div class="document-card">
-          <div class="document-image">
-            <img src="${doc.image}" alt="${doc.title}" loading="lazy">
-            ${doc.sample ? '<div class="sample-overlay">샘플</div>' : ''}
+      // 슬라이더 구조로 변경
+      grid.innerHTML = `
+        <div class="documents-slider">
+          <div class="documents-slider-wrapper">
+            <div class="documents-slider-container">
+              ${config.documentSamples.documents.map((doc, index) => `
+                <div class="document-slide" data-slide="${index}">
+                  <div class="document-card">
+                    <div class="document-image">
+                      <img src="${doc.image}" alt="${doc.title}" loading="lazy">
+                      ${doc.sample ? '<div class="sample-overlay">샘플</div>' : ''}
+                    </div>
+                    <div class="document-content">
+                      <h3 class="document-title">${doc.title}</h3>
+                      <p class="document-description">${doc.description}</p>
+                      <ul class="document-features">
+                        ${doc.features.map(feature => `<li>${feature}</li>`).join('')}
+                      </ul>
+                      <button class="btn btn-outline document-preview" data-doc="${doc.id}">
+                        미리보기
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
           </div>
-          <div class="document-content">
-            <h3 class="document-title">${doc.title}</h3>
-            <p class="document-description">${doc.description}</p>
-            <ul class="document-features">
-              ${doc.features.map(feature => `<li>${feature}</li>`).join('')}
-            </ul>
-            <button class="btn btn-outline document-preview" data-doc="${doc.id}">
-              미리보기
-            </button>
+          <button class="documents-slider-prev" aria-label="이전 서류">‹</button>
+          <button class="documents-slider-next" aria-label="다음 서류">›</button>
+          <div class="documents-slider-dots">
+            ${config.documentSamples.documents.map((_, index) => `
+              <button class="dot ${index === 0 ? 'active' : ''}" data-slide="${index}" aria-label="서류 ${index + 1}"></button>
+            `).join('')}
           </div>
         </div>
-      `).join('');
+      `;
+
+      // 슬라이더 초기화
+      const sliderContainer = grid.querySelector('.documents-slider-container');
+      const slides = grid.querySelectorAll('.document-slide');
+      const prevBtn = grid.querySelector('.documents-slider-prev');
+      const nextBtn = grid.querySelector('.documents-slider-next');
+      const dots = grid.querySelectorAll('.documents-slider-dots .dot');
+
+      let currentSlide = 0;
+      const totalSlides = slides.length;
+
+      function showSlide(index) {
+        if (index < 0) index = totalSlides - 1;
+        if (index >= totalSlides) index = 0;
+
+        sliderContainer.style.transform = `translateX(-${index * 100}%)`;
+
+        // 도트 업데이트
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+
+        currentSlide = index;
+      }
+
+      // 이전/다음 버튼 이벤트
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+      }
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+      }
+
+      // 도트 네비게이션
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+      });
+
+      // 스와이프 지원 (터치 디바이스)
+      let startX = 0;
+      let isDragging = false;
+
+      sliderContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+
+      sliderContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+
+      sliderContainer.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) {
+            showSlide(currentSlide + 1);
+          } else {
+            showSlide(currentSlide - 1);
+          }
+        }
+
+        isDragging = false;
+      });
 
       // 미리보기 버튼 이벤트
       grid.addEventListener('click', function(e) {
         if (e.target.classList.contains('document-preview')) {
           const docId = e.target.dataset.doc;
-          // 모달 또는 새 창에서 문서 미리보기 (구현 생략)
           console.log('문서 미리보기:', docId);
         }
       });
@@ -333,35 +450,6 @@
     });
   }
 
-  // 후기 섹션 렌더링
-  function renderReviewsSection() {
-    const title = document.getElementById('reviews-title');
-    const subtitle = document.getElementById('reviews-subtitle');
-    const samples = document.getElementById('reviews-samples');
-    const ctaBtn = document.getElementById('reviews-cta-btn');
-
-    if (title) title.textContent = config.reviews.title;
-    if (subtitle) subtitle.textContent = config.reviews.subtitle;
-    if (ctaBtn) ctaBtn.textContent = config.reviews.cta;
-
-    if (samples && config.reviews.samples) {
-      samples.innerHTML = config.reviews.samples.map(review => `
-        <div class="review-sample">
-          <div class="review-header">
-            <div class="reviewer-info">
-              <span class="reviewer-name">${review.name}</span>
-              <span class="reviewer-branch">${review.branch}</span>
-            </div>
-            <div class="review-rating">
-              <span class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</span>
-            </div>
-          </div>
-          <div class="review-text">${review.text}</div>
-          <div class="review-date">${review.date}</div>
-        </div>
-      `).join('');
-    }
-  }
 
   // 가격 섹션 렌더링
   function renderPricingSection() {
