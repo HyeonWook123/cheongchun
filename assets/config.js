@@ -272,8 +272,8 @@ window.__SITE_CONFIG__ = {
   // 가격 및 패키지
   pricing: [
     {
-      title: "Basic",
-      subtitle: "1일 구직청원휴가 상담",
+      title: "1일 구직청원휴가 상담",
+      subtitle: "",
       price: "40,000",
       unit: "원",
       popular: false,
@@ -285,12 +285,12 @@ window.__SITE_CONFIG__ = {
         "24시간 카톡 지원"
       ],
       limitations: [],
-      cta: "Basic 선택",
-      guarantee: "부대 사유로 승인 불가시 50% 환불"
+      cta: "1일 과정 선택",
+      guarantee: ""
     },
     {
-      title: "Standard",
-      subtitle: "2일 구직청원휴가 상담",
+      title: "2일 구직청원휴가 상담",
+      subtitle: "",
       price: "50,000",
       unit: "원",
       popular: true,
@@ -303,8 +303,8 @@ window.__SITE_CONFIG__ = {
         "필요시 약식진행"
       ],
       limitations: [],
-      cta: "Standard 선택",
-      guarantee: "부대 사유로 승인 불가시 전액 환불"
+      cta: "2일 과정 선택",
+      guarantee: ""
     }
   ],
 
