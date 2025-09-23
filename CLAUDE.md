@@ -12,90 +12,98 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Start local server
 python3 -m http.server 8000
 # Then open http://localhost:8000
+
+# Kill existing server if needed
+lsof -i :8000
+kill -9 [PID]
 ```
 
-### Testing Changes
+### Git Operations
 ```bash
-# Kill existing server if running
-lsof -i :8000  # Find process
-kill -9 [PID]  # Kill it
+# Quick commit and push
+git add -A
+git commit -m "message"
+git push
 
-# Restart server
-python3 -m http.server 8000
+# Restore changes if needed
+git restore .
 ```
 
 ## Architecture
 
 ### Core Structure
-- **Static Site**: Pure HTML/CSS/JS without build process
-- **Configuration-Driven**: All content managed through `assets/config.js`
-- **Multi-Page**: 4 HTML pages (index, center-intro, military-tips, reviews)
+- **Static Site**: Pure HTML/CSS/JS without build process or dependencies
+- **Configuration-Driven**: All content in `assets/config.js` - single source of truth
+- **Responsive Design**: Mobile-first approach with breakpoint at 768px
 
-### Key Files
-- `assets/config.js`: Central configuration for all content, forms, pricing
-- `main.js`: Renders dynamic content from config, handles interactions
-- `styles.css`: CSS variables for theming, responsive design system
+### Key Files & Their Roles
+1. **`assets/config.js`**: Central configuration containing:
+   - `selfDiagnosis.forms`: Category-specific questionnaires (military-job, startup, education)
+   - `pricing.plans`: Basic (49,000원) and Standard (89,000원) packages
+   - `process.steps`: 5-step consultation process
+   - `documents.samples`: Text consultation records and certificates
+   - `proofs.images`: 3 certification images for slider
 
-### Dynamic Components
-1. **Self-Diagnosis Section**: Category-based questionnaire system
-   - Forms object contains category-specific questions (military-job, startup, education)
-   - Dynamic question rendering with progress tracking
-   - Category switching updates questions and results
+2. **`main.js`**: Dynamic rendering engine:
+   - `renderSelfDiagnosis()`: Category switching and question navigation
+   - `renderProofSlider()`: Fade-based image carousel with dots
+   - `renderDocumentsSection()`: Manual horizontal slider
+   - `initKakaoChannel()`: Kakao channel integration
 
-2. **Sliders**: Two slider implementations
-   - Proof slider: Auto-scrolling infinite loop
-   - Document samples: Manual navigation with dots and arrows
+3. **`styles.css`**: Design system with:
+   - CSS variables for theming (--brand: #1f6fff)
+   - Responsive utilities using clamp() for fluid typography
+   - Grid-based pricing cards (2 columns on all devices)
+   - Floating CTA button with centered positioning
 
-3. **Floating CTA**: Centered "지금 바로 예약하기" button linking to Kakao channel
+### Component Implementations
 
-## Content Management
-
-### Updating Text/Links
-Edit `assets/config.js`:
-- Hero section content
-- Self-diagnosis questions and categories
-- Document samples
-- Process steps
-- Pricing packages
-- FAQ items
-
-### Images
-Replace files in `assets/images/` keeping same filenames:
-- `청춘도약일자리교육원_logo.jpeg`: Main logo
-- `thumb1-6.png`: Blog post thumbnails
-- `certification_*.jpeg`: Document samples
-
-### Styling
-Modify CSS variables in `styles.css`:
-```css
-:root {
-  --brand: #1f6fff;
-  --brand-dark: #0051e0;
-  --brand-light: #e8f0ff;
-}
-```
-
-## Recent Architecture Changes
-
-### Category-Based Forms
-- `selfDiagnosis.forms` object maps category IDs to question sets
-- `getCurrentForm()` function retrieves active category's questions
-- Category buttons trigger form reset and re-render
-
-### Document Slider Implementation
-- Converted from grid layout to horizontal slider
+#### Proof Slider (실제 서류 첨삭 사례)
+- Opacity-based transitions instead of transform
+- Absolute positioning for all slides
 - Touch/swipe support for mobile
-- Dot navigation with active state tracking
+- Classes: `.proof-slider-new`, `.proof-slide`, `.proof-controls`
 
-## Git Workflow
-```bash
-# Check status
-git status
+#### Pricing Cards
+- Flex layout with `flex: 1` for equal width
+- Responsive font sizing with clamp()
+- Always displays 2 cards side-by-side
+- Popular card has blue border
 
-# Stage and commit
-git add .
-git commit -m "Your message"
+#### Self-Diagnosis System
+- Three categories with unique question sets
+- Progress tracking with current/total display
+- Results calculation based on answers
+- Dynamic form switching without page reload
 
-# Push changes
-git push origin main
-```
+## Critical Implementation Notes
+
+### Mobile Responsiveness
+- Pricing cards use grid with 2 columns even on mobile
+- Process guide uses centered text with numbers above titles
+- Hero background uses viewport units for proper scaling
+- Footer includes business info: 455-12-52943, mystaryoyo4@naver.com
+
+### Recent UI Decisions
+- Removed reviews section from homepage
+- Converted document samples to manual slider (not auto-scroll)
+- Floating button changed from Kakao yellow to blue "지금 예약하기"
+- Hero uses background image with overlay (0.7 opacity desktop, 0.8 mobile)
+
+### Known Issues & Solutions
+- If pricing cards text overflows: Check clamp() values in CSS
+- If sliders show duplicate images: Verify config.js image arrays
+- If sections disappear: Check main.js render functions are all called
+
+## Content Update Locations
+
+### Business Information
+- Email: `config.contact.email`
+- Business Number: `config.contact.businessNumber`
+- Kakao URL: `config.kakaoChannelUrl`
+
+### Visual Assets
+- Hero background: `assets/images/b7f4fd81d147b0c0febb22f073b1365c.jpg`
+- Logo: `assets/images/청춘도약일자리교육원_logo.jpeg`
+- Certifications: `certification_1.jpg`, `certification_3.jpg`, `certification_4.jpg`
+- Blog thumbnails: `thumb1.png` through `thumb6.png`

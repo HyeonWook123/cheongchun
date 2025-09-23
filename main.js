@@ -498,7 +498,7 @@
     if (grid && config.pricing) {
       grid.innerHTML = config.pricing.map(item => `
         <div class="pricing-card ${item.popular ? 'popular' : ''}">
-          ${item.popular ? '<div class="popular-badge">인기</div>' : ''}
+          ${item.popular ? '<div class="pricing-badge">인기</div>' : ''}
           <div class="pricing-header">
             <h3 class="pricing-title">${item.title}</h3>
             <p class="pricing-subtitle">${item.subtitle}</p>
@@ -510,7 +510,7 @@
           <div class="pricing-content">
             <ul class="pricing-features">
               ${item.features.map(feature =>
-                `<li class="pricing-feature">✓ ${feature}</li>`
+                `<li class="pricing-feature">${feature}</li>`
               ).join('')}
             </ul>
             ${item.limitations && item.limitations.length > 0 ? `
