@@ -179,6 +179,36 @@ a:hover {
   line-height: 1.2;
 }
 
+.logo-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: flex-start;
+}
+
+.logo-text-main {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 700;
+  color: #212529 !important;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  background: linear-gradient(135deg, #1f6fff 0%, #0052d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-text-sub {
+  font-size: clamp(0.65rem, 2vw, 0.75rem);
+  font-weight: 500;
+  color: #6c757d !important;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  border-left: 2px solid #1f6fff;
+  padding-left: 0.5rem;
+  margin-left: 0.2rem;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -288,6 +318,53 @@ a:hover {
   .hero::before {
     background: linear-gradient(135deg, rgba(232, 242, 255, 0.8) 0%, rgba(240, 247, 255, 0.8) 100%);
   }
+
+  .sub-nav-menu {
+    justify-content: center;
+    padding: 0;
+    display: flex;
+  }
+
+  .sub-nav-btn {
+    flex: 0 0 20%;
+    width: 20%;
+    min-width: 0;
+    padding: 0.5rem 0.1rem;
+    white-space: nowrap;
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .sub-nav-btn:last-child {
+    border-right: none;
+  }
+
+  .sub-nav-text {
+    font-size: 0.48rem;
+    letter-spacing: -0.05em;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* 더 작은 모바일 화면 대응 */
+@media (max-width: 480px) {
+  .sub-nav-btn {
+    padding: 0.45rem 0.02rem;
+  }
+
+  .sub-nav-text {
+    font-size: 0.45rem;
+    letter-spacing: -0.05em;
+  }
+}
+
+/* 아주 작은 화면 대응 */
+@media (max-width: 360px) {
+  .sub-nav-text {
+    font-size: 0.45rem;
+    letter-spacing: -0.06em;
+  }
 }
 
 .self-diagnosis {
@@ -344,29 +421,40 @@ a:hover {
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
+.sub-nav .container {
+  padding: 0;
+  max-width: 100%;
+}
+
 .sub-nav-menu {
   display: flex;
   justify-content: stretch;
   gap: 0;
   max-width: 1200px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 
 .sub-nav-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(0.75rem, 2vw, 1rem) clamp(0.5rem, 3vw, 2rem);
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(0.4rem, 2vw, 1.2rem);
   text-decoration: none;
   color: var(--text-light);
-  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  font-size: clamp(0.75rem, 1.6vw, 0.9rem);
   font-weight: 500;
   transition: all 0.2s ease;
   position: relative;
   white-space: nowrap;
   border-bottom: clamp(2px, 0.5vw, 3px) solid transparent;
+  border-right: 1px solid #e0e0e0;
   flex: 1;
   text-align: center;
+}
+
+.sub-nav-btn:last-child {
+  border-right: none;
 }
 
 .sub-nav-btn:hover {
