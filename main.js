@@ -607,19 +607,23 @@
     const email = document.getElementById('footer-email');
     const address = document.getElementById('footer-address');
     const businessNumber = document.getElementById('footer-business-number');
+    const ceo = document.getElementById('footer-ceo');
     const bankAccount = document.getElementById('footer-bank-account');
     const links = document.getElementById('footer-links');
     const copyright = document.getElementById('footer-copyright');
 
-    if (description) description.textContent = config.footer.description;
-    if (phone) phone.textContent = config.contact.phone;
-    if (email) email.textContent = config.contact.email;
+    if (description) description.textContent = config.tagline || config.footer?.description || '2030 청년들을 위한 일자리 정보 포털';
+    if (phone) phone.textContent = `상담 문의: ${config.contact.phone}`;
     if (address) address.textContent = config.contact.address;
-    if (businessNumber) businessNumber.textContent = `사업자등록번호: ${config.contact.businessNumber}`;
+    if (businessNumber) businessNumber.textContent = config.contact.businessNumber;
+    if (ceo && config.contact.ceo) ceo.textContent = config.contact.ceo;
     if (bankAccount && config.contact.bankAccount) bankAccount.textContent = `계좌번호: ${config.contact.bankAccount}`;
-    if (copyright) copyright.textContent = config.footer.copyright;
+    if (copyright) {
+      const year = new Date().getFullYear();
+      copyright.textContent = `© ${year} ${config.brandName}. All rights reserved.`;
+    }
 
-    if (links && config.footer.links) {
+    if (links && config.footer?.links) {
       links.innerHTML = config.footer.links.map(link =>
         `<a href="${link.url}">${link.text}</a>`
       ).join('');

@@ -2,7 +2,7 @@
 window.__SITE_CONFIG__ = {
   // 브랜드 정보
   brandName: "청춘도약일자리교육원",
-  tagline: "2030 청년들을 위한 일자리 정보 포털",
+  tagline: "2020 청년들을 위한 일자리 정보 포털",
 
   // 카카오톡 채널 설정
   kakaoChannelUrl: "https://pf.kakao.com/_sylen", // 카카오 채널 URL을 여기에 입력
@@ -13,10 +13,11 @@ window.__SITE_CONFIG__ = {
 
   // 연락처 정보
   contact: {
-    phone: "010-0000-0000",
+    phone: "0507-1353-8459",
     email: "mystaryoyo4@naver.com",
-    address: "서울시 ○○구 ○○로 00",
-    businessNumber: "455-12-52943",
+    address: "서울 구로구 20가길 5",
+    businessNumber: "544-52-00853",
+    ceo: "이현진",
   },
 
   // 히어로 섹션
