@@ -402,92 +402,11 @@
     }
   }
 
-  // 증빙 자료 슬라이더 (새로운 구현)
+  // 증빙 자료 슬라이더 (리뷰 섹션으로 대체됨)
   function renderProofSlider() {
-    const section = document.getElementById('proof');
-    if (!section) return;
-
-    // 섹션 내용 완전히 재구성
-    section.innerHTML = `
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">${config.proofs.title}</h2>
-          <p class="section-subtitle">${config.proofs.subtitle}</p>
-        </div>
-        <div class="proof-slider-new">
-          <div class="proof-slides">
-            ${config.proofs.images.map((img, index) => `
-              <div class="proof-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
-                <img src="${img}" alt="서류 ${index + 1}">
-              </div>
-            `).join('')}
-          </div>
-          <div class="proof-controls">
-            <button class="proof-btn-prev" aria-label="이전">‹</button>
-            <button class="proof-btn-next" aria-label="다음">›</button>
-          </div>
-          <div class="proof-indicators">
-            ${config.proofs.images.map((_, index) => `
-              <button class="proof-dot ${index === 0 ? 'active' : ''}" data-index="${index}" aria-label="슬라이드 ${index + 1}"></button>
-            `).join('')}
-          </div>
-        </div>
-      </div>
-    `;
-
-    // 슬라이더 로직
-    let currentIndex = 0;
-    const slides = section.querySelectorAll('.proof-slide');
-    const dots = section.querySelectorAll('.proof-dot');
-    const prevBtn = section.querySelector('.proof-btn-prev');
-    const nextBtn = section.querySelector('.proof-btn-next');
-    const totalSlides = slides.length;
-
-    function updateSlider(index) {
-      // 범위 체크
-      if (index < 0) index = totalSlides - 1;
-      if (index >= totalSlides) index = 0;
-
-      // 모든 슬라이드 숨기기
-      slides.forEach(slide => slide.classList.remove('active'));
-      dots.forEach(dot => dot.classList.remove('active'));
-
-      // 현재 슬라이드 표시
-      slides[index].classList.add('active');
-      dots[index].classList.add('active');
-
-      currentIndex = index;
-    }
-
-    // 버튼 이벤트
-    prevBtn.addEventListener('click', () => updateSlider(currentIndex - 1));
-    nextBtn.addEventListener('click', () => updateSlider(currentIndex + 1));
-
-    // 도트 클릭
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => updateSlider(index));
-    });
-
-    // 터치 스와이프
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    section.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-    });
-
-    section.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].clientX;
-      const diff = touchStartX - touchEndX;
-
-      if (Math.abs(diff) > 50) {
-        if (diff > 0) {
-          updateSlider(currentIndex + 1); // 왼쪽 스와이프 = 다음
-        } else {
-          updateSlider(currentIndex - 1); // 오른쪽 스와이프 = 이전
-        }
-      }
-    });
+    // 이 함수는 더 이상 사용되지 않음
+    // 리뷰 섹션이 HTML에 직접 추가됨
+    return;
   }
 
 
