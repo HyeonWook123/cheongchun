@@ -215,7 +215,7 @@ window.__SITE_CONFIG__ = {
         title: "상담내역서",
         description: "발급처, 담당자, 상담 일시·내용 요약",
         features: ["공식 서명/직인", "문의처 포함", "진위확인 QR코드"],
-        image: "assets/images/certification_3.jpg",
+        image: "assets/images/certification_3.jpeg",
         sample: true
       },
       {
@@ -223,7 +223,7 @@ window.__SITE_CONFIG__ = {
         title: "수료증",
         description: "상담/교육 수료 시 발급되는 공식 증명서",
         features: ["수료과정명", "교육시간", "고유번호", "발급일자"],
-        image: "assets/images/certification_2.jpg",
+        image: "assets/images/certification_1.jpeg",
         sample: true
       },
       {
@@ -231,7 +231,7 @@ window.__SITE_CONFIG__ = {
         title: "예약확정서",
         description: "상담 예정 확인서 (필요시 발급)",
         features: ["예약 일시/장소", "신청자 정보", "예약번호"],
-        image: "assets/images/certification_1.jpg",
+        image: "assets/images/certification_2.png",
         sample: true
       }
     ]
@@ -405,9 +405,9 @@ window.__SITE_CONFIG__ = {
     title: "실제 서류 첨삭 사례",
     subtitle: "합격자들의 생생한 후기",
     images: [
-      "assets/images/certification_1.jpg",
-      "assets/images/certification_3.jpg",
-      "assets/images/certification_4.jpg"
+      "assets/images/certification_1.jpeg",
+      "assets/images/certification_2.png",
+      "assets/images/certification_3.jpeg"
     ]
   }
 };
