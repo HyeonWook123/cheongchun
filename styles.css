@@ -2301,9 +2301,16 @@ section {
   font-weight: 600;
 }
 
-.reviewer-branch {
+.reviewer-branch,
+.reviewer-category {
   font-size: 0.85rem;
   color: var(--text-muted);
+  background: var(--brand-light);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  display: inline-block;
+  text-align: center;
+  min-width: 80px;
 }
 
 .review-rating .stars {

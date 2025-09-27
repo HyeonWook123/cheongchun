@@ -378,7 +378,7 @@ window.__SITE_CONFIG__ = {
   kakaoBanner: {
     title: "카카오톡으로\n빠른 상담",
     caption: "구직청원휴가 관련\n궁금한 점을\n바로 해결하세요",
-    phoneMock: "assets/images/mock_up.png",
+    phoneMock: "assets/images/mockup_jinheung.png",
     cta: "카카오톡 상담하기"
   },
 
