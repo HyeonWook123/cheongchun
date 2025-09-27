@@ -2367,6 +2367,15 @@ section {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.filter-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .filter-tab {
@@ -2376,6 +2385,8 @@ section {
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .filter-tab:hover,
@@ -2383,6 +2394,19 @@ section {
   background: var(--brand);
   color: white;
   border-color: var(--brand);
+}
+
+@media (max-width: 768px) {
+  .filter-tabs {
+    gap: 0.5rem;
+    justify-content: flex-start;
+    padding: 0 1rem;
+  }
+
+  .filter-tab {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 .reviews-list {
@@ -2505,6 +2529,46 @@ section {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
   20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* 센터 소개 페이지 스타일 */
+.curriculum-section {
+  padding: 2rem 0;
+  background: white;
+}
+
+.curriculum-image-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.curriculum-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.center-info-image {
+  padding: 4rem 0;
+  background: #f8f9fa;
+}
+
+.info-image-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto 0;
+}
+
+.info-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
 
 /* 반응형 디자인 - 모바일 필수 스타일만 유지 */
 @media (max-width: 768px) {
@@ -2655,6 +2719,23 @@ section {
     bottom: 1.5rem;
     padding: 0.8rem 2rem;
     font-size: 0.95rem;
+  }
+
+  /* 센터 소개 모바일 스타일 */
+  .curriculum-section {
+    padding: 1.5rem 0;
+  }
+
+  .curriculum-image-wrapper {
+    padding: 0 1rem;
+  }
+
+  .center-info-image {
+    padding: 2rem 0;
+  }
+
+  .info-image-wrapper {
+    padding: 0 1rem;
   }
 }
 
