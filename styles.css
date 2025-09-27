@@ -146,7 +146,7 @@ a:hover {
 .header-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: clamp(0.5rem, 2vw, 1rem) 0;
 }
 
@@ -2580,11 +2580,11 @@ section {
 
   /* 헤더 모바일 조정 */
   .header-inner {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .logo {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   /* 네비게이션 모바일 숨김 */
