@@ -46,7 +46,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* 고정 헤더 높이만큼 스크롤 오프셋 */
+  scroll-padding-top: 130px; /* 고정 헤더 + 서브네비 높이만큼 스크롤 오프셋 */
   overflow-x: hidden;
   width: 100%;
 }
@@ -60,6 +60,7 @@ body {
   overflow-x: hidden;
   width: 100%;
   position: relative;
+  padding-top: 0; /* JS로 동적 계산 */
 }
 
 img {
@@ -136,11 +137,15 @@ a:hover {
 
 /* 헤더 */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   background: var(--bg);
-  box-shadow: var(--shadow);
-  z-index: 1000;
+  border-bottom: 1px solid var(--border);
+  z-index: 1001;
+  height: auto;
 }
 
 .header-inner {
@@ -310,6 +315,18 @@ a:hover {
 
 /* 모바일 최적화 */
 @media (max-width: 768px) {
+  body {
+    padding-top: 110px; /* 모바일에서는 헤더와 서브네비가 더 작음 */
+  }
+
+  html {
+    scroll-padding-top: 110px;
+  }
+
+  .sub-nav {
+    top: 60px; /* 모바일 헤더 높이 */
+  }
+
   .hero {
     background-position: center center;
     background-attachment: scroll;
@@ -329,7 +346,7 @@ a:hover {
     flex: 0 0 20%;
     width: 20%;
     min-width: 0;
-    padding: 0.5rem 0.1rem;
+    padding: 6px 0.1rem;
     white-space: nowrap;
     border-right: 1px solid #e0e0e0;
   }
@@ -350,7 +367,7 @@ a:hover {
 /* 더 작은 모바일 화면 대응 */
 @media (max-width: 480px) {
   .sub-nav-btn {
-    padding: 0.45rem 0.02rem;
+    padding: 5px 0.02rem;
   }
 
   .sub-nav-text {
@@ -413,12 +430,17 @@ a:hover {
 }
 
 /* 히어로 섹션 */
-/* 서브 네비게이션 */
+/* 서브 네비게이션 - 헤더 바로 아래 붙도록 */
 .sub-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
   background: white;
   border-bottom: 1px solid var(--border);
-  padding: 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 1000;
+  padding: 0;
 }
 
 .sub-nav .container {
@@ -439,7 +461,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(0.75rem, 2vw, 1rem) clamp(0.4rem, 2vw, 1.2rem);
+  padding: 8px clamp(0.4rem, 2vw, 1.2rem);
   text-decoration: none;
   color: var(--text-light);
   font-size: clamp(0.75rem, 1.6vw, 0.9rem);
@@ -1597,10 +1619,9 @@ section {
 }
 
 .footer-inner {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: clamp(2rem, 5vw, 4rem);
+  display: block;
   margin-bottom: clamp(1rem, 3vw, 2rem);
+  text-align: left;
 }
 
 .footer-brand {
@@ -1608,6 +1629,7 @@ section {
   align-items: center;
   gap: 1rem;
   margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  text-align: left;
 }
 
 .footer-logo {
@@ -1621,6 +1643,7 @@ section {
   font-size: clamp(0.9rem, 2vw, 1rem);
   color: #000;
   opacity: 1;
+  text-align: left;
 }
 
 .footer-org,
@@ -1633,6 +1656,7 @@ section {
   font-style: normal;
   color: var(--text-muted);
   font-size: 0.9rem;
+  text-align: left;
 }
 
 .footer-info {
