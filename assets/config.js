@@ -2,7 +2,7 @@
 window.__SITE_CONFIG__ = {
   // 브랜드 정보
   brandName: "청년취업진흥교육원",
-  tagline: "2020 청년들을 위한 일자리 정보 포털",
+  tagline: "2030 청년들을 위한 일자리 정보 포털",
 
   // 카카오톡 채널 설정
   kakaoChannelUrl: "https://pf.kakao.com/_YwsxcG", // 카카오 채널 URL을 여기에 입력
