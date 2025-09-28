@@ -511,7 +511,7 @@ a:hover {
 .page-hero {
   background: var(--bg-light);
   padding: 3rem 0;
-  text-align: left;
+  text-align: center;
   border-bottom: 1px solid var(--border);
 }
 
@@ -520,13 +520,13 @@ a:hover {
   font-weight: 700;
   margin-bottom: 1rem;
   color: var(--text);
-  text-align: left;
+  text-align: center;
 }
 
 .page-subtitle {
   font-size: clamp(1rem, 3vw, 1.25rem);
   color: var(--text-muted);
-  text-align: left;
+  text-align: center;
 }
 
 .reviews-stats {
@@ -2442,12 +2442,16 @@ section {
 
 .reviews-list {
   padding: 2rem 0;
+  display: flex;
+  justify-content: center;
 }
 
 .reviews-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
+  justify-content: center;
+  max-width: 400px;
 }
 
 .review-card {
