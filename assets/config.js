@@ -5,7 +5,7 @@ window.__SITE_CONFIG__ = {
   tagline: "2020 청년들을 위한 일자리 정보 포털",
 
   // 카카오톡 채널 설정
-  kakaoChannelUrl: "https://pf.kakao.com/_sylen", // 카카오 채널 URL을 여기에 입력
+  kakaoChannelUrl: "https://pf.kakao.com/_YwsxcG", // 카카오 채널 URL을 여기에 입력
 
   // [선택] 카카오 공식 위젯 사용시 (없으면 링크 방식으로 동작)
   kakaoAppKey: "", // 카카오 앱 키 (https://developers.kakao.com 에서 발급)
