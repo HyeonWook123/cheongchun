@@ -182,33 +182,185 @@
         <h2 class="section-title">실제 상담 후기</h2>
         <p class="section-subtitle">실제 이용자들의 생생한 후기</p>
       </div>
-      <div class="reviews-list">
-        <div class="reviews-grid">
-          <div class="review-card">
-            <div class="review-header">
-              <div class="reviewer-info">
-                <div class="reviewer-name">김○○ 병장</div>
-                <div class="reviewer-category">구직청원휴가</div>
+
+      <!-- 카카오톡 이미지 슬라이더 -->
+      <div class="kakao-review-slider">
+        <div class="slider-container">
+          <button class="slider-btn slider-btn-prev" onclick="moveSlide(-1)">‹</button>
+          <div class="slider-wrapper">
+            <div class="slider-track" id="reviewSliderTrack">
+              <div class="slide-item active">
+                <img src="assets/images/kakao_review12.png" alt="카카오톡 상담 후기 1">
               </div>
-              <div class="review-rating">
-                <span class="stars">⭐⭐⭐⭐⭐</span>
+              <div class="slide-item">
+                <img src="assets/images/kakao_review13.png" alt="카카오톡 상담 후기 2">
               </div>
-            </div>
-            <div class="review-content">
-              <p>구직청원휴가 신청이 처음이라 막막했는데 상담사님이 친절하게 하나하나 알려주셨습니다. 서류도 깔끔하게 준비해주셔서 부대에서 바로 승인받았어요!</p>
-            </div>
-            <div class="review-footer">
-              <span class="review-date">2024.01.15</span>
-              <span class="review-package">2일 과정</span>
+              <div class="slide-item">
+                <img src="assets/images/kakao_review14.png" alt="카카오톡 상담 후기 3">
+              </div>
+              <div class="slide-item">
+                <img src="assets/images/kakao_review15.png" alt="카카오톡 상담 후기 4">
+              </div>
+              <div class="slide-item">
+                <img src="assets/images/kakao_review16.png" alt="카카오톡 상담 후기 5">
+              </div>
             </div>
           </div>
+          <button class="slider-btn slider-btn-next" onclick="moveSlide(1)">›</button>
         </div>
       </div>
+
       <div class="reviews-cta">
         <a href="reviews.html" class="btn btn-primary btn-large">더 많은 후기 보기</a>
       </div>
     </div>
   </section>
+
+  <style>
+    .kakao-review-slider {
+      margin: 2rem 0;
+    }
+
+    .slider-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slider-wrapper {
+      overflow: hidden;
+      max-width: 400px;
+      height: 600px; /* 고정 높이 설정 */
+      margin: 0 auto;
+      background: #f8f9fa; /* 배경색 추가로 빈 공간 처리 */
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .slider-track {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .slide-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      padding: 10px; /* 이미지 주변 여백 */
+      box-sizing: border-box;
+    }
+
+    .slide-item.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-item img {
+      max-width: calc(100% - 20px);
+      max-height: calc(100% - 20px);
+      width: auto;
+      height: auto;
+      object-fit: contain; /* 비율 유지하면서 컨테이너에 맞춤 */
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      display: block;
+    }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .slider-btn:hover {
+      background: #f5f5f5;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .slider-btn-prev {
+      left: 10px;
+    }
+
+    .slider-btn-next {
+      right: 10px;
+    }
+
+
+    @media (max-width: 768px) {
+      .slider-wrapper {
+        max-width: 300px;
+        height: 450px; /* 모바일에서는 높이 조정 */
+      }
+
+      .slider-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+      }
+
+      .slider-btn-prev {
+        left: 5px;
+      }
+
+      .slider-btn-next {
+        right: 5px;
+      }
+    }
+  </style>
+
+  <script>
+    let slideIndex = 1;
+
+    function moveSlide(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let slides = document.getElementsByClassName("slide-item");
+      let dots = document.getElementsByClassName("dot");
+
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove('active');
+      }
+
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.remove('active');
+      }
+
+      slides[slideIndex - 1].classList.add('active');
+      dots[slideIndex - 1].classList.add('active');
+    }
+
+    // 페이지 로드 시 첫 번째 슬라이드 표시
+    window.addEventListener('load', function() {
+      showSlides(1);
+    });
+  </script>
 
   <!-- 가격 섹션 -->
   <section class="pricing" id="pricing">
@@ -268,7 +420,7 @@
 
   <!-- 플로팅 버튼 -->
   <a href="#" id="kakao-floating" class="floating-button js-kakao-cta">
-    <span class="floating-button-text">지금 예약하기</span>
+    <span class="floating-button-text">상담 문의하기</span>
   </a>
 
   <!-- 모바일 전용 스마트 스티커 CTA -->
