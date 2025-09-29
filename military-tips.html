@@ -292,6 +292,22 @@
     <span class="floating-button-text">상담 문의하기</span>
   </a>
 
+  <!-- Conversion Tracking Script -->
+  <script>
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+        'send_to': 'AW-10881212269/yIDKCJmx6aMbEO2-yMQo',
+        'event_callback': callback
+    });
+    return false;
+  }
+  </script>
+
   <!-- 스크립트 -->
   <script src="header-fix.js"></script>
   <script src="main.js"></script>

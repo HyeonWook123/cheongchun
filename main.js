@@ -559,6 +559,17 @@
         button.href = config.kakaoChannelUrl;
         button.target = '_blank';
         button.rel = 'noopener noreferrer';
+
+        // 전환 추적 이벤트 추가
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          // gtag_report_conversion 함수가 존재하는지 확인
+          if (typeof gtag_report_conversion === 'function') {
+            gtag_report_conversion(config.kakaoChannelUrl);
+          } else {
+            window.open(config.kakaoChannelUrl, '_blank', 'noopener,noreferrer');
+          }
+        });
       }
     });
 
@@ -566,7 +577,12 @@
     if (floatingBtn && (!config.kakaoAppKey || !config.kakaoChannelPublicId)) {
       floatingBtn.addEventListener('click', function(e) {
         e.preventDefault();
-        window.open(config.kakaoChannelUrl, '_blank', 'noopener,noreferrer');
+        // gtag_report_conversion 함수가 존재하는지 확인
+        if (typeof gtag_report_conversion === 'function') {
+          gtag_report_conversion(config.kakaoChannelUrl);
+        } else {
+          window.open(config.kakaoChannelUrl, '_blank', 'noopener,noreferrer');
+        }
       });
     }
   }
