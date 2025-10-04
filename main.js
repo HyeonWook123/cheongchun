@@ -374,7 +374,10 @@
       grid.addEventListener('click', function(e) {
         if (e.target.classList.contains('document-preview')) {
           const docId = e.target.dataset.doc;
-          console.log('문서 미리보기:', docId);
+          const doc = config.documentSamples.documents.find(d => d.id === docId);
+          if (doc && doc.image) {
+            openImageModal(doc.image, doc.title);
+          }
         }
       });
     }
@@ -670,5 +673,61 @@
         animationObserver.observe(el);
       });
     }
+  }
+
+  // 이미지 모달 열기
+  function openImageModal(imageSrc, imageTitle) {
+    // 모달이 이미 존재하면 제거
+    const existingModal = document.getElementById('image-modal');
+    if (existingModal) {
+      existingModal.remove();
+    }
+
+    // 모달 생성
+    const modal = document.createElement('div');
+    modal.id = 'image-modal';
+    modal.className = 'image-modal';
+    modal.innerHTML = `
+      <div class="image-modal-overlay"></div>
+      <div class="image-modal-content">
+        <button class="image-modal-close" aria-label="닫기">&times;</button>
+        <img src="${imageSrc}" alt="${imageTitle}" class="image-modal-img">
+        <p class="image-modal-title">${imageTitle}</p>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // 스크롤 방지
+    document.body.style.overflow = 'hidden';
+
+    // 애니메이션을 위한 약간의 딜레이
+    setTimeout(() => {
+      modal.classList.add('active');
+    }, 10);
+
+    // 닫기 이벤트
+    const closeModal = () => {
+      modal.classList.remove('active');
+      setTimeout(() => {
+        modal.remove();
+        document.body.style.overflow = '';
+      }, 300);
+    };
+
+    // 닫기 버튼 클릭
+    modal.querySelector('.image-modal-close').addEventListener('click', closeModal);
+
+    // 오버레이 클릭
+    modal.querySelector('.image-modal-overlay').addEventListener('click', closeModal);
+
+    // ESC 키로 닫기
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
   }
 })();

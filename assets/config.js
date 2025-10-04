@@ -292,7 +292,7 @@ window.__SITE_CONFIG__ = {
     {
       title: "2일 구직청원휴가 상담",
       subtitle: "",
-      price: "50,000",
+      price: "60,000",
       unit: "원",
       popular: true,
       features: [

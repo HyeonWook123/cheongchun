@@ -2952,11 +2952,124 @@ section {
   border: 0;
 }
 
+/* 이미지 모달 */
+.image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.image-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.image-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}
+
+.image-modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.image-modal.active .image-modal-content {
+  transform: scale(1);
+}
+
+.image-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+  line-height: 1;
+  padding: 0;
+}
+
+.image-modal-close:hover {
+  opacity: 0.7;
+}
+
+.image-modal-img {
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.image-modal-title {
+  color: white;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* 모바일 모달 조정 */
+@media (max-width: 768px) {
+  .image-modal-content {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+
+  .image-modal-close {
+    top: -35px;
+    font-size: 2rem;
+    width: 35px;
+    height: 35px;
+  }
+
+  .image-modal-img {
+    max-height: 85vh;
+  }
+
+  .image-modal-title {
+    font-size: 0.95rem;
+    margin-top: 0.75rem;
+  }
+}
+
 /* 프린트 */
 @media print {
   .header,
   .floating-button,
-  .nav-toggle {
+  .nav-toggle,
+  .image-modal {
     display: none;
   }
 }
