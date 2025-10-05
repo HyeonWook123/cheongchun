@@ -372,6 +372,8 @@
 
   <script>
     let slideIndex = 1;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
     function moveSlide(n) {
       showSlides(slideIndex += n);
@@ -397,12 +399,60 @@
       }
 
       slides[slideIndex - 1].classList.add('active');
-      dots[slideIndex - 1].classList.add('active');
+      if (dots.length > 0) {
+        dots[slideIndex - 1].classList.add('active');
+      }
     }
 
-    // 페이지 로드 시 첫 번째 슬라이드 표시
+    function handleSwipe() {
+      const swipeThreshold = 50; // 최소 스와이프 거리 (픽셀)
+      const difference = touchStartX - touchEndX;
+
+      if (Math.abs(difference) > swipeThreshold) {
+        if (difference > 0) {
+          // 왼쪽으로 스와이프 -> 다음 슬라이드
+          moveSlide(1);
+        } else {
+          // 오른쪽으로 스와이프 -> 이전 슬라이드
+          moveSlide(-1);
+        }
+      }
+    }
+
+    // 페이지 로드 시 첫 번째 슬라이드 표시 및 터치 이벤트 등록
     window.addEventListener('load', function() {
       showSlides(1);
+
+      const sliderWrapper = document.querySelector('.slider-wrapper');
+      if (sliderWrapper) {
+        sliderWrapper.addEventListener('touchstart', function(e) {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        sliderWrapper.addEventListener('touchend', function(e) {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        });
+
+        // 마우스 드래그도 지원 (데스크톱용)
+        let mouseDown = false;
+        sliderWrapper.addEventListener('mousedown', function(e) {
+          mouseDown = true;
+          touchStartX = e.screenX;
+        });
+
+        sliderWrapper.addEventListener('mouseup', function(e) {
+          if (mouseDown) {
+            touchEndX = e.screenX;
+            handleSwipe();
+            mouseDown = false;
+          }
+        });
+
+        sliderWrapper.addEventListener('mouseleave', function() {
+          mouseDown = false;
+        });
+      }
     });
   </script>
 
