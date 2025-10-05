@@ -5,7 +5,7 @@ window.__SITE_CONFIG__ = {
   tagline: "2030 청년들을 위한 일자리 정보 포털",
 
   // 카카오톡 채널 설정
-  kakaoChannelUrl: "https://pf.kakao.com/_YwsxcG", // 카카오 채널 URL을 여기에 입력
+  kakaoChannelUrl: "http://pf.kakao.com/_YwsxcG/chat", // 카카오 채널 URL을 여기에 입력
 
   // [선택] 카카오 공식 위젯 사용시 (없으면 링크 방식으로 동작)
   kakaoAppKey: "", // 카카오 앱 키 (https://developers.kakao.com 에서 발급)
@@ -25,7 +25,7 @@ window.__SITE_CONFIG__ = {
     headline: "지금 바로 구직청원휴가\n신청하세요",
     subcopy: "50% 이상 복무하신 분들께\n취업 | 창업 컨설팅 | 군 경험 기반 개인 역량 분석표 제공",
     image: "assets/images/hero_image.png",
-    primaryCta: "구직청원휴가 자가진단 하기",
+    primaryCta: "구직청원휴가 상담받기",
     badges: [
       "대면 및 비대면 진행",
       "신청 당일 서류발급",
