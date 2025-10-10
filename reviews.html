@@ -997,18 +997,7 @@
   <!-- Conversion Tracking Script -->
   <script>
   function gtag_report_conversion(url) {
-    var callback = function () {
-      if (typeof(url) != 'undefined') {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }
-    };
-
-    // Google Ads 전환 추적
-    gtag('event', 'conversion', {
-        'send_to': 'AW-10881212269/yIDKCJmx6aMbEO2-yMQo',
-        'event_callback': callback
-    });
-
+    // 먼저 GA4 이벤트들을 전송
     // 기존 GA4에 카카오 상담 클릭 이벤트 전송
     gtag('event', 'kakao_consultation_click', {
         'send_to': 'G-BQSBWCBJZD',
@@ -1026,6 +1015,20 @@
         'value': 60000,
         'currency': 'KRW'
     });
+
+    // Google Ads 전환 추적 (약간의 지연 후)
+    setTimeout(function() {
+      gtag('event', 'conversion', {
+        'send_to': 'AW-10881212269/yIDKCJmx6aMbEO2-yMQo'
+      });
+
+      // URL 이동도 지연
+      if (typeof(url) != 'undefined') {
+        setTimeout(function() {
+          window.open(url, '_blank', 'noopener,noreferrer');
+        }, 100);
+      }
+    }, 50);
 
     return false;
   }
