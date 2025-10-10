@@ -537,10 +537,27 @@
         window.open(url, '_blank', 'noopener,noreferrer');
       }
     };
+
+    // Google Ads 전환 추적
     gtag('event', 'conversion', {
         'send_to': 'AW-10881212269/yIDKCJmx6aMbEO2-yMQo',
         'event_callback': callback
     });
+
+    // 기존 GA4에 카카오 상담 클릭 이벤트 전송
+    gtag('event', 'kakao_consultation_click', {
+        'send_to': 'G-BQSBWCBJZD',
+        'event_category': 'engagement',
+        'event_label': 'kakao_channel'
+    });
+
+    // 새로운 GA4에도 카카오 상담 클릭 이벤트 전송
+    gtag('event', 'kakao_consultation_click', {
+        'send_to': 'G-E6PRPMNQYH',
+        'event_category': 'engagement',
+        'event_label': 'kakao_channel'
+    });
+
     return false;
   }
   </script>
