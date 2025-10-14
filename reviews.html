@@ -997,8 +997,8 @@
   <!-- Conversion Tracking Script -->
   <script>
   function gtag_report_conversion(url) {
-    // localStorage에서 이미 클릭한 적이 있는지 확인
-    const hasClicked = localStorage.getItem('kakao_consultation_clicked');
+    // sessionStorage에서 이미 클릭한 적이 있는지 확인
+    const hasClicked = sessionStorage.getItem('kakao_consultation_clicked');
 
     // 이미 클릭한 적이 있으면 이벤트 전송 없이 바로 URL 열기
     if (hasClicked) {
@@ -1008,8 +1008,8 @@
       return false;
     }
 
-    // 처음 클릭한 경우: localStorage에 플래그 저장
-    localStorage.setItem('kakao_consultation_clicked', 'true');
+    // 처음 클릭한 경우: sessionStorage에 플래그 저장
+    sessionStorage.setItem('kakao_consultation_clicked', 'true');
 
     // 먼저 GA4 이벤트들을 전송
     // 기존 GA4에 카카오 상담 클릭 이벤트 전송

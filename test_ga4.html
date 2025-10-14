@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GA4 Event Test</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E6PRPMNQYH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-E6PRPMNQYH', { 'debug_mode': true });
+    </script>
+</head>
+<body>
+    <h1>GA4 Test Page</h1>
+    <button onclick="testEvent()">Test Kakao Click Event</button>
+    
+    <script>
+    function testEvent() {
+        gtag('event', 'kakao_consultation_click', {
+            'event_category': 'engagement',
+            'event_label': 'test_button',
+            'debug_mode': true
+        });
+        alert('Event sent! Check GA4 DebugView');
+    }
+    </script>
+</body>
+</html>
