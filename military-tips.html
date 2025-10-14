@@ -365,8 +365,16 @@
 
     // Google Ads 전환 추적 (약간의 지연 후)
     setTimeout(function() {
+      // 기존 Google Ads 전환
       gtag('event', 'conversion', {
         'send_to': 'AW-10881212269/yIDKCJmx6aMbEO2-yMQo'
+      });
+
+      // 새로운 Google Ads 전환
+      gtag('event', 'conversion', {
+        'send_to': 'AW-17650063498/pGMACL_-1KwbEIqxmuBB',
+        'value': 1.0,
+        'currency': 'KRW'
       });
 
       // URL 이동도 지연
