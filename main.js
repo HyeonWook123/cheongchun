@@ -341,16 +341,26 @@
 
       // 스와이프 지원 (터치 디바이스)
       let startX = 0;
+      let startY = 0;
       let isDragging = false;
 
       sliderContainer.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
         isDragging = true;
       });
 
       sliderContainer.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
-        e.preventDefault();
+
+        // 이동 거리 계산
+        const moveX = Math.abs(e.touches[0].clientX - startX);
+        const moveY = Math.abs(e.touches[0].clientY - startY);
+
+        // 수평 스와이프가 더 크면 스크롤 차단
+        if (moveX > moveY) {
+          e.preventDefault();
+        }
       });
 
       sliderContainer.addEventListener('touchend', (e) => {
